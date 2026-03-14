@@ -1,16 +1,13 @@
 import { Link } from 'react-router-dom'
-import { homeSections, plans, processSteps, sampleProjects } from '../data/site'
-
-const galaxyLanguages = [
-  { label: 'HTML', top: '18%', left: '20%', size: 'sm', orbit: 'slow', tone: 'cyan' },
-  { label: 'CSS', top: '26%', left: '58%', size: 'sm', orbit: 'medium', tone: 'white' },
-  { label: 'JavaScript', top: '36%', left: '72%', size: 'lg', orbit: 'slow', tone: 'magenta' },
-  { label: 'TypeScript', top: '50%', left: '62%', size: 'lg', orbit: 'medium', tone: 'cyan' },
-  { label: 'Python', top: '58%', left: '24%', size: 'md', orbit: 'fast', tone: 'white' },
-  { label: 'Node.js', top: '68%', left: '74%', size: 'md', orbit: 'slow', tone: 'cyan' },
-  { label: 'React', top: '42%', left: '12%', size: 'sm', orbit: 'medium', tone: 'magenta' },
-  { label: 'Vite', top: '74%', left: '48%', size: 'sm', orbit: 'fast', tone: 'white' },
-]
+import {
+  getHomeSections,
+  getPlans,
+  getProcessSteps,
+  getSampleCategoryLabel,
+  getSampleProjects,
+} from "../data/site";
+import { useSitePreferences } from "../context/SitePreferences";
+import { usePageSeo } from "../hooks/usePageSeo";
 
 const galaxyStars = [
   { top: '12%', left: '26%', size: 4 },
@@ -24,47 +21,375 @@ const galaxyStars = [
   { top: '82%', left: '58%', size: 2 },
 ]
 
-export function HomePage() {
+const codeRainColumns = [
+  ["<html>", "<body>", "<section>", "<h1>", "<p>", "<Link>", "</section>"],
+  ["const", "layout", "=", "{", "grid:", '"2col"', "}"],
+  ["function", "render()", "{", "return", "<Hero />", "}"],
+  ["import", "React", "from", '"react"', ";", "export"],
+  ["type", "Flow", "=", '"design"', "|", '"build"'],
+  ["npm", "run", "build", "git", "push", "origin"],
+  ["schema", "logic", "motion", "ui", "ux", "launch"],
+  ["API", "Route", "State", "Node", "Vite", "TS"],
+];
+
+const pageScatterLanguages = [
+  { label: "HTML", top: "4%", left: "10%", tone: "cyan", motion: "slow" },
+  { label: "CSS", top: "7%", left: "78%", tone: "white", motion: "medium" },
+  {
+    label: "TypeScript",
+    top: "13%",
+    left: "60%",
+    tone: "magenta",
+    motion: "slow",
+  },
+  { label: "React", top: "18%", left: "16%", tone: "cyan", motion: "fast" },
+  { label: "Schema", top: "23%", left: "88%", tone: "white", motion: "medium" },
+  { label: "Motion", top: "29%", left: "8%", tone: "magenta", motion: "slow" },
+  { label: "Build", top: "34%", left: "72%", tone: "cyan", motion: "medium" },
+  { label: "Node.js", top: "39%", left: "24%", tone: "white", motion: "fast" },
+  { label: "Grid", top: "44%", left: "92%", tone: "cyan", motion: "slow" },
+  { label: "UI", top: "49%", left: "14%", tone: "magenta", motion: "medium" },
+  { label: "UX", top: "54%", left: "82%", tone: "white", motion: "fast" },
+  { label: "Deploy", top: "59%", left: "32%", tone: "cyan", motion: "slow" },
+  { label: "Route", top: "64%", left: "6%", tone: "white", motion: "medium" },
+  { label: "API", top: "69%", left: "74%", tone: "magenta", motion: "slow" },
+  { label: "Design", top: "74%", left: "18%", tone: "cyan", motion: "fast" },
+  { label: "Code", top: "79%", left: "90%", tone: "white", motion: "medium" },
+  { label: "Vision", top: "84%", left: "58%", tone: "magenta", motion: "slow" },
+  { label: "Launch", top: "90%", left: "12%", tone: "cyan", motion: "medium" },
+  { label: "Future", top: "95%", left: "80%", tone: "white", motion: "fast" },
+  {
+    label: "JavaScript",
+    top: "10%",
+    left: "30%",
+    tone: "magenta",
+    motion: "medium",
+  },
+  { label: "Layout", top: "16%", left: "92%", tone: "cyan", motion: "slow" },
+  { label: "Render", top: "26%", left: "42%", tone: "white", motion: "fast" },
+  {
+    label: "Studio",
+    top: "32%",
+    left: "56%",
+    tone: "magenta",
+    motion: "medium",
+  },
+  { label: "Flow", top: "46%", left: "44%", tone: "cyan", motion: "slow" },
+  { label: "Scale", top: "52%", left: "66%", tone: "white", motion: "medium" },
+  { label: "System", top: "61%", left: "48%", tone: "magenta", motion: "fast" },
+  { label: "State", top: "72%", left: "38%", tone: "cyan", motion: "slow" },
+  { label: "Scroll", top: "81%", left: "26%", tone: "white", motion: "medium" },
+  { label: "Signal", top: "88%", left: "70%", tone: "magenta", motion: "fast" },
+] as const;
+
+const sectionLanguages = {
+  concept: [
+    { label: "Grid", top: "8%", left: "74%", tone: "cyan", motion: "slow" },
+    { label: "Flow", top: "58%", left: "14%", tone: "white", motion: "medium" },
+    { label: "UX", top: "80%", left: "84%", tone: "magenta", motion: "fast" },
+    {
+      label: "Layout",
+      top: "18%",
+      left: "18%",
+      tone: "cyan",
+      motion: "medium",
+    },
+    { label: "Wire", top: "84%", left: "44%", tone: "white", motion: "slow" },
+  ],
+  process: [
+    { label: "Logic", top: "12%", left: "10%", tone: "white", motion: "slow" },
+    {
+      label: "Schema",
+      top: "30%",
+      left: "88%",
+      tone: "cyan",
+      motion: "medium",
+    },
+    {
+      label: "Motion",
+      top: "78%",
+      left: "18%",
+      tone: "magenta",
+      motion: "fast",
+    },
+    { label: "Build", top: "18%", left: "64%", tone: "cyan", motion: "slow" },
+    {
+      label: "Deploy",
+      top: "86%",
+      left: "82%",
+      tone: "white",
+      motion: "medium",
+    },
+  ],
+  pricing: [
+    { label: "HTML", top: "18%", left: "84%", tone: "white", motion: "slow" },
+    { label: "CSS", top: "72%", left: "8%", tone: "cyan", motion: "medium" },
+    { label: "TS", top: "84%", left: "72%", tone: "magenta", motion: "fast" },
+    { label: "React", top: "14%", left: "18%", tone: "cyan", motion: "medium" },
+    { label: "Route", top: "64%", left: "88%", tone: "white", motion: "slow" },
+  ],
+  sample: [
+    { label: "React", top: "10%", left: "12%", tone: "cyan", motion: "slow" },
+    { label: "Node", top: "24%", left: "88%", tone: "white", motion: "medium" },
+    { label: "API", top: "86%", left: "22%", tone: "magenta", motion: "fast" },
+    { label: "UI", top: "78%", left: "82%", tone: "cyan", motion: "medium" },
+    {
+      label: "Design",
+      top: "16%",
+      left: "58%",
+      tone: "magenta",
+      motion: "slow",
+    },
+    { label: "Code", top: "90%", left: "60%", tone: "white", motion: "medium" },
+  ],
+  cta: [
+    {
+      label: "Launch",
+      top: "18%",
+      left: "80%",
+      tone: "magenta",
+      motion: "slow",
+    },
+    {
+      label: "Design",
+      top: "70%",
+      left: "12%",
+      tone: "cyan",
+      motion: "medium",
+    },
+    { label: "Code", top: "82%", left: "68%", tone: "white", motion: "fast" },
+    { label: "Future", top: "14%", left: "20%", tone: "cyan", motion: "slow" },
+    {
+      label: "Vision",
+      top: "54%",
+      left: "86%",
+      tone: "magenta",
+      motion: "medium",
+    },
+  ],
+} as const;
+
+function LanguageScatter({
+  items,
+}: {
+  items: ReadonlyArray<{
+    label: string;
+    top: string;
+    left: string;
+    tone: "cyan" | "white" | "magenta";
+    motion: "slow" | "medium" | "fast";
+  }>;
+}) {
   return (
-    <>
-      <section className="section-block overflow-hidden pt-20 md:pt-28">
-        <div className="container-shell grid gap-12 lg:grid-cols-[1.3fr_0.9fr] lg:items-center">
-          <div className="relative z-10 text-center lg:text-left">
-            <span className="eyebrow">Structure Driven Creative Studio</span>
-            <h1 className="title-display max-w-4xl">
-              解放せよ
-              <br />
-              <span className="text-gradient">感性と感覚を</span>
-            </h1>
-            <p className="mx-auto mt-6 max-w-xl text-xl leading-9 text-white/70 md:text-2xl lg:mx-0">
-              構造から設計する
-              <br />
-              Web制作会社
-            </p>
-            <div className="mt-10 flex flex-wrap justify-center gap-4 lg:justify-start">
-              <Link to="/contact" className="primary-button">
-                制作相談
-              </Link>
-              <Link to="/price" className="secondary-button">
-                PRICEを見る
-              </Link>
-            </div>
-          </div>
+    <div
+      className="home-language-field pointer-events-none absolute inset-0"
+      aria-hidden="true"
+    >
+      {items.map((item) => (
+        <div
+          key={`${item.label}-${item.top}-${item.left}`}
+          style={{ top: item.top, left: item.left }}
+          className="absolute -translate-x-1/2 -translate-y-1/2"
+        >
+          <span
+            className={[
+              "home-language-orb absolute left-1/2 top-1/2",
+              item.tone === "cyan"
+                ? "home-language-orb-cyan"
+                : item.tone === "magenta"
+                  ? "home-language-orb-magenta"
+                  : "home-language-orb-white",
+            ].join(" ")}
+          />
+          <span
+            className={[
+              'home-language-chip relative z-10 rounded-full px-3.5 py-2 font-["Space_Grotesk"] text-[0.74rem] uppercase tracking-[0.28em] backdrop-blur-xl',
+              item.motion === "slow"
+                ? "floating-slow"
+                : item.motion === "medium"
+                  ? "floating-medium"
+                  : "floating-fast",
+              item.tone === "cyan"
+                ? "home-language-chip-cyan"
+                : item.tone === "magenta"
+                  ? "home-language-chip-magenta"
+                  : "home-language-chip-white",
+            ].join(" ")}
+          >
+            {item.label}
+          </span>
+        </div>
+      ))}
+    </div>
+  );
+}
 
-          <div className="relative min-h-[360px] overflow-hidden rounded-[2rem] border border-white/10 bg-grid bg-[size:32px_32px] p-4 shadow-aura sm:min-h-[420px] sm:p-6 md:min-h-[460px]">
-            <div className="absolute inset-6 rounded-[1.75rem] border border-cyan-300/20 bg-white/5" />
-            <div className="galaxy-nebula absolute inset-0" />
-            <div className="galaxy-dust absolute inset-0 opacity-80" />
-            <div className="galaxy-core absolute left-1/2 top-1/2 h-28 w-28 -translate-x-1/2 -translate-y-1/2 rounded-full sm:h-32 sm:w-32 md:h-36 md:w-36" />
-            <div className="galaxy-ring galaxy-ring-one absolute left-1/2 top-1/2 h-[10rem] w-[82vw] max-w-[20rem] -translate-x-1/2 -translate-y-1/2 rounded-full sm:h-[12rem] md:h-[13rem]" />
-            <div className="galaxy-ring galaxy-ring-two absolute left-1/2 top-1/2 h-[14rem] w-[92vw] max-w-[25rem] -translate-x-1/2 -translate-y-1/2 rounded-full sm:h-[16rem] md:h-[17rem]" />
-            <div className="galaxy-ring galaxy-ring-three absolute left-1/2 top-1/2 h-[18rem] w-[98vw] max-w-[30rem] -translate-x-1/2 -translate-y-1/2 rounded-full sm:h-[20rem] md:h-[21rem]" />
+export function HomePage() {
+  const { locale, currency } = useSitePreferences();
+  const homeSections = getHomeSections(locale);
+  const plans = getPlans(locale, currency);
+  const processSteps = getProcessSteps(locale);
+  const sampleProjects = getSampleProjects(locale);
 
-            <div className="relative flex h-full flex-col justify-between">
-              <div className="glass-panel w-fit rounded-full px-4 py-2 text-xs tracking-[0.24em] text-white/70">
-                CODE CONSTELLATION GALAXY
+  const copy = {
+    ja: {
+      eyebrow: "Structure Driven Creative Studio",
+      heroTitleTop: "解放せよ",
+      heroTitleBottom: "感性と感覚を",
+      heroLead: "構造から設計する\nWeb制作会社",
+      contactCta: "制作相談",
+      priceCta: "PRICEを見る",
+      processEyebrow: "PROCESS OVERVIEW",
+      processTitle: "制作の流れを可視化し、迷いを減らす。",
+      processLink: "詳細を見る",
+      priceEyebrow: "PRICE OVERVIEW",
+      priceTitle: "成果へ必要な構造に応じて、3つの設計プランを用意。",
+      priceLink: "価格詳細へ",
+      sampleEyebrow: "SAMPLE",
+      sampleTitle: "30サンプルで、構造設計の表現幅を提示する。",
+      sampleLink: "全サンプルを見る",
+      ctaEyebrow: "CALL TO ACTION",
+      ctaTitle: "構造から整えたいなら、まずは現状の課題を聞かせてください。",
+      ctaBody:
+        "単なる見た目の刷新ではなく、伝わり方と導線の設計を変えたい事業者向けの相談窓口です。",
+      ctaButton: "制作相談を始める",
+      seoTitle: "HOME",
+      seoDescription:
+        "STRUCTURE は構造設計から始める Web制作会社です。多言語対応、SEO 初期設計、多通貨価格表示を備えたサイト制作を行います。",
+    },
+    en: {
+      eyebrow: "Structure Driven Creative Studio",
+      heroTitleTop: "UNLOCK",
+      heroTitleBottom: "SENSE AND INSTINCT",
+      heroLead: "A web studio\ndesigned from structure",
+      contactCta: "Start a project",
+      priceCta: "View PRICE",
+      processEyebrow: "PROCESS OVERVIEW",
+      processTitle: "Make the production flow visible and remove hesitation.",
+      processLink: "View details",
+      priceEyebrow: "PRICE OVERVIEW",
+      priceTitle:
+        "Three design plans matched to the structure required for results.",
+      priceLink: "Pricing details",
+      sampleEyebrow: "SAMPLES",
+      sampleTitle:
+        "Thirty samples showing the expressive range of structure design.",
+      sampleLink: "See all samples",
+      ctaEyebrow: "CALL TO ACTION",
+      ctaTitle:
+        "If you want to refine from structure, start by telling us the current challenge.",
+      ctaBody:
+        "This is a consultation line for businesses that want to change not just appearance, but how the message and user flow actually work.",
+      ctaButton: "Begin consultation",
+      seoTitle: "HOME",
+      seoDescription:
+        "STRUCTURE is a web studio that starts with structure design, multilingual support, initial SEO planning, and multi-currency pricing visibility.",
+    },
+  }[locale];
+
+  usePageSeo({
+    title: copy.seoTitle,
+    description: copy.seoDescription,
+    locale,
+  });
+
+  return (
+    <div className="home-page-shell relative overflow-hidden">
+      <LanguageScatter items={pageScatterLanguages} />
+      <div className="relative z-10">
+        <section className="home-hero-stage section-block overflow-hidden pt-20 md:pt-28">
+          <div className="hero-scanline" aria-hidden="true" />
+          <div className="hero-code-rain" aria-hidden="true">
+            {codeRainColumns.map((column, index) => (
+              <div
+                key={`column-${index}`}
+                className={[
+                  "code-rain-column",
+                  index % 2 === 0 ? "code-rain-fast" : "code-rain-slow",
+                  index % 3 === 0
+                    ? "code-rain-cyan"
+                    : index % 3 === 1
+                      ? "code-rain-white"
+                      : "code-rain-magenta",
+                ].join(" ")}
+                style={{
+                  left: `${4 + index * 11.5}%`,
+                  animationDelay: `${index * -1.8}s`,
+                }}
+              >
+                {[...column, ...column, ...column].map((token, tokenIndex) => (
+                  <span
+                    key={`${token}-${tokenIndex}`}
+                    className="code-rain-token"
+                  >
+                    {token}
+                  </span>
+                ))}
               </div>
+            ))}
+          </div>
+          <div className="hero-stage-nebula galaxy-nebula" aria-hidden="true" />
+          <div
+            className="hero-stage-dust galaxy-dust opacity-80"
+            aria-hidden="true"
+          />
+          <div className="galaxy-core absolute left-1/2 top-[42%] h-28 w-28 -translate-x-1/2 -translate-y-1/2 rounded-full sm:h-36 sm:w-36 md:h-40 md:w-40" />
+          <div className="galaxy-ring galaxy-ring-one absolute left-1/2 top-[42%] h-[12rem] w-[70vw] max-w-[30rem] -translate-x-1/2 -translate-y-1/2 rounded-full sm:h-[14rem] md:h-[16rem]" />
+          <div className="galaxy-ring galaxy-ring-two absolute left-1/2 top-[42%] h-[18rem] w-[88vw] max-w-[48rem] -translate-x-1/2 -translate-y-1/2 rounded-full sm:h-[22rem] md:h-[24rem]" />
+          <div className="galaxy-ring galaxy-ring-three absolute left-1/2 top-[42%] h-[26rem] w-[96vw] max-w-[70rem] -translate-x-1/2 -translate-y-1/2 rounded-full opacity-70" />
 
+          <div className="container-shell relative min-h-[32rem] sm:min-h-[38rem] md:min-h-[42rem]">
+            <div className="home-hero-copy relative z-10 mx-auto flex min-h-[32rem] max-w-4xl flex-col items-center justify-center text-center sm:min-h-[38rem] md:min-h-[42rem]">
+              <div
+                className="home-hero-aura home-hero-aura-left"
+                aria-hidden="true"
+              />
+              <div
+                className="home-hero-aura home-hero-aura-right"
+                aria-hidden="true"
+              />
+              <span
+                className="eyebrow home-reveal"
+                style={{ animationDelay: "0.08s" }}
+              >
+                {copy.eyebrow}
+              </span>
+              <h1
+                className="title-display home-reveal max-w-4xl"
+                style={{ animationDelay: "0.16s" }}
+              >
+                <span className="matrix-title-line">
+                  <span className="matrix-title-copy">{copy.heroTitleTop}</span>
+                </span>
+                <br />
+                <span className="matrix-title-line matrix-title-line-accent">
+                  <span className="matrix-title-copy">
+                    {copy.heroTitleBottom}
+                  </span>
+                </span>
+              </h1>
+              <p
+                className="home-reveal mx-auto mt-6 max-w-xl text-xl leading-9 text-white/70 md:text-2xl lg:mx-0"
+                style={{ animationDelay: "0.24s" }}
+              >
+                {copy.heroLead.split("\n").map((line, index) => (
+                  <span key={line}>
+                    {index > 0 ? <br /> : null}
+                    {line}
+                  </span>
+                ))}
+              </p>
+              <div
+                className="home-reveal mt-10 flex flex-wrap justify-center gap-4"
+                style={{ animationDelay: "0.32s" }}
+              >
+                <Link to="/contact" className="primary-button">
+                  {copy.contactCta}
+                </Link>
+                <Link to="/price" className="secondary-button">
+                  {copy.priceCta}
+                </Link>
+              </div>
               <div className="pointer-events-none absolute inset-0">
                 {galaxyStars.map((star, index) => (
                   <span
@@ -79,169 +404,181 @@ export function HomePage() {
                     }}
                   />
                 ))}
-
-                {galaxyLanguages.map((language) => (
-                  <span
-                    key={language.label}
-                    className={[
-                      'galaxy-language absolute -translate-x-1/2 -translate-y-1/2 rounded-full px-4 py-2 font-["Space_Grotesk"] text-white backdrop-blur-xl',
-                      language.size === 'lg' ? 'text-base md:text-lg' : language.size === 'md' ? 'text-sm md:text-base' : 'text-xs md:text-sm',
-                      language.orbit === 'slow'
-                        ? 'galaxy-orbit-slow'
-                        : language.orbit === 'medium'
-                          ? 'galaxy-orbit-medium'
-                          : 'galaxy-orbit-fast',
-                      language.tone === 'cyan'
-                        ? 'border border-cyan-300/40 bg-cyan-300/10 shadow-[0_0_35px_rgba(0,255,255,0.14)]'
-                        : language.tone === 'magenta'
-                          ? 'border border-fuchsia-400/40 bg-fuchsia-400/10 shadow-[0_0_35px_rgba(255,0,255,0.14)]'
-                          : 'border border-white/20 bg-white/10 shadow-[0_0_35px_rgba(255,255,255,0.08)]',
-                    ].join(' ')}
-                    style={{ top: language.top, left: language.left }}
-                  >
-                    {language.label}
-                  </span>
-                ))}
-              </div>
-
-              <div className="relative ml-auto mt-auto max-w-[10rem] rounded-[1.5rem] border border-white/10 bg-black/20 p-4 text-right backdrop-blur-xl sm:max-w-[12rem]">
-                <p className="text-[0.65rem] uppercase tracking-[0.28em] text-white/45">Galaxy Reading</p>
-                <p className="mt-3 font-['Space_Grotesk'] text-base text-white/90 sm:text-lg">言語が点ではなく、構造の軌道になる。</p>
               </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      <section className="section-block">
-        <div className="container-shell grid gap-6 lg:grid-cols-2">
-          {homeSections.map((section) => (
-            <article key={section.title} className="glass-panel rounded-[2rem] p-8 md:p-10">
-              <h2 className="section-title text-2xl md:text-3xl">{section.title}</h2>
-              <p className="mt-6 text-base leading-8 text-white/70">{section.body}</p>
-            </article>
-          ))}
-        </div>
-      </section>
-
-      <section className="section-block">
-        <div className="container-shell">
-          <div className="mb-12 flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
-            <div>
-              <span className="eyebrow">PROCESS OVERVIEW</span>
-              <h2 className="section-title">制作の流れを可視化し、迷いを減らす。</h2>
-            </div>
-            <Link to="/process" className="secondary-button w-fit">
-              詳細を見る
-            </Link>
-          </div>
-
-          <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-5">
-            {processSteps.map((step) => (
-              <article key={step.step} className="glass-panel rounded-[2rem] p-6">
-                <p className="text-xs tracking-[0.3em] text-cyan-300">{step.step}</p>
-                <h3 className="mt-4 font-['Space_Grotesk'] text-2xl">{step.title}</h3>
-                <p className="mt-4 text-sm leading-7 text-white/60">{step.body}</p>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="section-block">
-        <div className="container-shell">
-          <div className="mb-12 flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
-            <div>
-              <span className="eyebrow">PRICE OVERVIEW</span>
-              <h2 className="section-title">成果へ必要な構造に応じて、3つの設計プランを用意。</h2>
-            </div>
-            <Link to="/price" className="secondary-button w-fit">
-              価格詳細へ
-            </Link>
-          </div>
-
-          <div className="grid gap-5 lg:grid-cols-3">
-            {plans.map((plan, index) => (
+        <section className="section-block overflow-hidden">
+          <div className="container-shell relative grid gap-6 lg:grid-cols-2">
+            <LanguageScatter items={sectionLanguages.concept} />
+            {homeSections.map((section, index) => (
               <article
-                key={plan.name}
-                className={[
-                  'glass-panel rounded-[2rem] p-8',
-                  index === 1 ? 'border-cyan-300/40 bg-cyan-300/10' : '',
-                ].join(' ')}
+                key={section.title}
+                className="glass-panel home-panel-reveal relative z-10 rounded-[2rem] p-8 md:p-10"
+                style={{ animationDelay: `${0.12 + index * 0.08}s` }}
               >
-                <p className="font-['Space_Grotesk'] text-2xl">{plan.name}</p>
-                <p className="mt-3 text-4xl font-medium text-white">{plan.price}</p>
-                <ul className="mt-8 space-y-3 text-sm text-white/70">
-                  {plan.features.map((feature) => (
-                    <li key={feature} className="rounded-2xl border border-white/10 px-4 py-3">
-                      {feature}
-                    </li>
-                  ))}
-                </ul>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="section-block">
-        <div className="container-shell">
-          <div className="mb-12 flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
-            <div>
-              <span className="eyebrow">SAMPLE</span>
-              <h2 className="section-title">30サンプルで、構造設計の表現幅を提示する。</h2>
-            </div>
-            <Link to="/sample" className="secondary-button w-fit">
-              全サンプルを見る
-            </Link>
-          </div>
-
-          <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
-            {sampleProjects.slice(0, 6).map((project, index) => (
-              <article key={project.id} className="glass-panel group rounded-[2rem] p-6 transition duration-300 hover:-translate-y-1">
-                <div className="flex items-center justify-between text-xs uppercase tracking-[0.28em] text-white/50">
-                  <span>{project.category}</span>
-                  <span>{String(index + 1).padStart(2, '0')}</span>
-                </div>
-                <div className="mt-6 rounded-[1.6rem] border border-white/10 bg-gradient-to-br from-white/10 to-transparent p-5">
-                  <div className="rounded-[1.4rem] border border-white/10 bg-[#0d0d18] p-4">
-                    <div className="flex gap-2">
-                      <span className="h-2.5 w-2.5 rounded-full bg-cyan-300" />
-                      <span className="h-2.5 w-2.5 rounded-full bg-white/50" />
-                      <span className="h-2.5 w-2.5 rounded-full bg-fuchsia-400" />
-                    </div>
-                    <div className="mt-4 grid gap-3 md:grid-cols-[1.3fr_0.7fr]">
-                      <div className="h-40 rounded-[1rem] bg-white/5" />
-                      <div className="h-40 rounded-[1rem] border border-dashed border-white/20 bg-white/5" />
-                    </div>
-                  </div>
-                </div>
-                <h3 className="mt-6 font-['Space_Grotesk'] text-2xl">{project.title}</h3>
-                <p className="mt-3 text-sm leading-7 text-white/60">{project.catchCopy}</p>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="section-block pb-24 md:pb-32">
-        <div className="container-shell">
-          <div className="glass-panel rounded-[2.5rem] px-8 py-10 md:px-12 md:py-14">
-            <span className="eyebrow">CALL TO ACTION</span>
-            <div className="mt-4 flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
-              <div>
-                <h2 className="section-title max-w-3xl">構造から整えたいなら、まずは現状の課題を聞かせてください。</h2>
-                <p className="mt-6 section-copy">
-                  単なる見た目の刷新ではなく、伝わり方と導線の設計を変えたい事業者向けの相談窓口です。
+                <h2 className="section-title text-2xl md:text-3xl">
+                  {section.title}
+                </h2>
+                <p className="mt-6 text-base leading-8 text-white/70">
+                  {section.body}
                 </p>
+              </article>
+            ))}
+          </div>
+        </section>
+
+        <section className="section-block overflow-hidden">
+          <div className="container-shell relative">
+            <LanguageScatter items={sectionLanguages.process} />
+            <div className="mb-12 flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+              <div>
+                <span className="eyebrow">{copy.processEyebrow}</span>
+                <h2 className="section-title">{copy.processTitle}</h2>
               </div>
-              <Link to="/contact" className="primary-button w-fit">
-                制作相談を始める
+              <Link to="/process" className="secondary-button w-fit">
+                {copy.processLink}
               </Link>
             </div>
+
+            <div className="relative z-10 grid gap-5 md:grid-cols-2 xl:grid-cols-5">
+              {processSteps.map((step, index) => (
+                <article
+                  key={step.step}
+                  className="glass-panel home-panel-reveal rounded-[2rem] p-6"
+                  style={{ animationDelay: `${0.08 + index * 0.06}s` }}
+                >
+                  <p className="text-xs tracking-[0.3em] text-cyan-300">
+                    {step.step}
+                  </p>
+                  <h3 className="mt-4 font-['Space_Grotesk'] text-2xl">
+                    {step.title}
+                  </h3>
+                  <p className="mt-4 text-sm leading-7 text-white/60">
+                    {step.body}
+                  </p>
+                </article>
+              ))}
+            </div>
           </div>
-        </div>
-      </section>
-    </>
-  )
+        </section>
+
+        <section className="section-block overflow-hidden">
+          <div className="container-shell relative">
+            <LanguageScatter items={sectionLanguages.pricing} />
+            <div className="mb-12 flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+              <div>
+                <span className="eyebrow">{copy.priceEyebrow}</span>
+                <h2 className="section-title">{copy.priceTitle}</h2>
+              </div>
+              <Link to="/price" className="secondary-button w-fit">
+                {copy.priceLink}
+              </Link>
+            </div>
+
+            <div className="relative z-10 grid gap-5 lg:grid-cols-3">
+              {plans.map((plan, index) => (
+                <article
+                  key={plan.name}
+                  className={[
+                    "glass-panel home-panel-reveal rounded-[2rem] p-8",
+                    index === 1 ? "border-cyan-300/40 bg-cyan-300/10" : "",
+                  ].join(" ")}
+                  style={{ animationDelay: `${0.1 + index * 0.08}s` }}
+                >
+                  <p className="font-['Space_Grotesk'] text-2xl">{plan.name}</p>
+                  <p className="mt-3 text-4xl font-medium text-white">
+                    {plan.price}
+                  </p>
+                  <ul className="mt-8 space-y-3 text-sm text-white/70">
+                    {plan.features.map((feature) => (
+                      <li
+                        key={feature}
+                        className="rounded-2xl border border-white/10 px-4 py-3"
+                      >
+                        {feature}
+                      </li>
+                    ))}
+                  </ul>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section className="section-block overflow-hidden">
+          <div className="container-shell relative">
+            <LanguageScatter items={sectionLanguages.sample} />
+            <div className="mb-12 flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+              <div>
+                <span className="eyebrow">{copy.sampleEyebrow}</span>
+                <h2 className="section-title">{copy.sampleTitle}</h2>
+              </div>
+              <Link to="/sample" className="secondary-button w-fit">
+                {copy.sampleLink}
+              </Link>
+            </div>
+
+            <div className="relative z-10 grid gap-5 md:grid-cols-2 xl:grid-cols-3">
+              {sampleProjects.slice(0, 6).map((project, index) => (
+                <article
+                  key={project.id}
+                  className="glass-panel home-panel-reveal group rounded-[2rem] p-6 transition duration-300 hover:-translate-y-1"
+                  style={{ animationDelay: `${0.08 + index * 0.06}s` }}
+                >
+                  <div className="flex items-center justify-between text-xs uppercase tracking-[0.28em] text-white/50">
+                    <span>
+                      {getSampleCategoryLabel(project.category, locale)}
+                    </span>
+                    <span>{String(index + 1).padStart(2, "0")}</span>
+                  </div>
+                  <div className="sample-preview-shell mt-6 rounded-[1.6rem] border border-white/10 bg-gradient-to-br from-white/10 to-transparent p-5">
+                    <div className="sample-preview-core rounded-[1.4rem] border border-white/10 bg-[#0d0d18] p-4">
+                      <div className="flex gap-2">
+                        <span className="h-2.5 w-2.5 rounded-full bg-cyan-300" />
+                        <span className="h-2.5 w-2.5 rounded-full bg-white/50" />
+                        <span className="h-2.5 w-2.5 rounded-full bg-fuchsia-400" />
+                      </div>
+                      <div className="mt-4 grid gap-3 md:grid-cols-[1.3fr_0.7fr]">
+                        <div className="h-40 rounded-[1rem] bg-white/5" />
+                        <div className="h-40 rounded-[1rem] border border-dashed border-white/20 bg-white/5" />
+                      </div>
+                    </div>
+                  </div>
+                  <h3 className="mt-6 font-['Space_Grotesk'] text-2xl">
+                    {project.title}
+                  </h3>
+                  <p className="mt-3 text-sm leading-7 text-white/60">
+                    {project.catchCopy}
+                  </p>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section className="section-block pb-24 md:pb-32">
+          <div className="container-shell relative overflow-hidden">
+            <LanguageScatter items={sectionLanguages.cta} />
+            <div
+              className="glass-panel home-panel-reveal relative z-10 rounded-[2.5rem] px-8 py-10 md:px-12 md:py-14"
+              style={{ animationDelay: "0.12s" }}
+            >
+              <span className="eyebrow">{copy.ctaEyebrow}</span>
+              <div className="mt-4 flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
+                <div>
+                  <h2 className="section-title max-w-3xl">{copy.ctaTitle}</h2>
+                  <p className="mt-6 section-copy">{copy.ctaBody}</p>
+                </div>
+                <Link to="/contact" className="primary-button w-fit">
+                  {copy.ctaButton}
+                </Link>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+  );
 }

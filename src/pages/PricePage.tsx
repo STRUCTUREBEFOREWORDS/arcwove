@@ -1,19 +1,54 @@
 import { Link } from 'react-router-dom'
-import { plans } from "../data/site";
+import { getPlans } from "../data/site";
+import { useSitePreferences } from "../context/SitePreferences";
+import { usePageSeo } from "../hooks/usePageSeo";
 
 export function PricePage() {
+  const { locale, currency } = useSitePreferences();
+  const plans = getPlans(locale, currency);
+
+  const copy = {
+    ja: {
+      eyebrow: "PRICE",
+      title: "構造設計の深さに応じた、3つのプラン。",
+      lead: "すべてのプランでレスポンシブ対応と構造設計を含みます。事業の伸ばし方に応じて、導線と体験の粒度を調整します。",
+      ctaTitle:
+        "どのプランが合うか分からない場合は、相談ベースで整理できます。",
+      ctaBody: "目的、現在の課題、ページ数感から適切な設計レベルを提案します。",
+      ctaButton: "相談する",
+      seoTitle: "PRICE",
+      seoDescription:
+        "STRUCTURE の制作プランを多通貨で比較できます。構造設計、SEO 初期設計、多言語対応を含む各プランを確認できます。",
+    },
+    en: {
+      eyebrow: "PRICE",
+      title: "Three plans matched to the depth of structure design you need.",
+      lead: "Every plan includes responsive implementation and structural planning. We adjust flow and experience depth to fit how your business needs to grow.",
+      ctaTitle:
+        "If you are unsure which plan fits, we can map it out in consultation.",
+      ctaBody:
+        "We recommend the right design level based on your goals, current challenges, and expected page volume.",
+      ctaButton: "Talk to us",
+      seoTitle: "PRICE",
+      seoDescription:
+        "Compare STRUCTURE web production plans in multiple currencies, including structure design, initial SEO setup, and multilingual support.",
+    },
+  }[locale];
+
+  usePageSeo({
+    title: copy.seoTitle,
+    description: copy.seoDescription,
+    locale,
+  });
+
   return (
     <section className="section-block pb-24 md:pb-32">
       <div className="container-shell">
-        <span className="eyebrow">PRICE</span>
+        <span className="eyebrow">{copy.eyebrow}</span>
         <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
           <div>
-            <h1 className="section-title">
-              構造設計の深さに応じた、3つのプラン。
-            </h1>
-            <p className="mt-6 section-copy">
-              すべてのプランでレスポンシブ対応と構造設計を含みます。事業の伸ばし方に応じて、導線と体験の粒度を調整します。
-            </p>
+            <h1 className="section-title">{copy.title}</h1>
+            <p className="mt-6 section-copy">{copy.lead}</p>
           </div>
         </div>
 
@@ -50,14 +85,12 @@ export function PricePage() {
           <div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
             <div>
               <h2 className="section-title text-2xl md:text-4xl">
-                どのプランが合うか分からない場合は、相談ベースで整理できます。
+                {copy.ctaTitle}
               </h2>
-              <p className="mt-4 max-w-2xl text-white/70">
-                目的、現在の課題、ページ数感から適切な設計レベルを提案します。
-              </p>
+              <p className="mt-4 max-w-2xl text-white/70">{copy.ctaBody}</p>
             </div>
             <Link to="/contact" className="primary-button w-fit">
-              相談する
+              {copy.ctaButton}
             </Link>
           </div>
         </div>
