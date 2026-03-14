@@ -1,0 +1,328 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Space+Grotesk:wght@400;500;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    color: #ffffff;
+    background:
+      radial-gradient(circle at top left, rgba(0, 255, 255, 0.14), transparent 30%),
+      radial-gradient(circle at 85% 15%, rgba(255, 0, 255, 0.16), transparent 24%),
+      linear-gradient(180deg, #0a0a12 0%, #080810 100%);
+    font-family: 'Noto Sans JP', sans-serif;
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    --page-width: 1200px;
+    --border: rgba(255, 255, 255, 0.12);
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    min-width: 320px;
+    margin: 0;
+    min-height: 100vh;
+    background: transparent;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  button,
+  input,
+  select,
+  textarea {
+    font: inherit;
+  }
+
+  #root {
+    min-height: 100vh;
+  }
+}
+
+@layer components {
+  .page-shell {
+    @apply relative overflow-hidden bg-transparent text-white;
+  }
+
+  .page-shell::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    background:
+      radial-gradient(circle at 20% 20%, rgba(0, 255, 255, 0.08), transparent 18%),
+      radial-gradient(circle at 80% 10%, rgba(255, 0, 255, 0.1), transparent 18%),
+      radial-gradient(circle at 50% 80%, rgba(0, 255, 255, 0.05), transparent 24%);
+    filter: blur(10px);
+  }
+
+  .container-shell {
+    width: min(calc(100% - 2rem), var(--page-width));
+    margin: 0 auto;
+  }
+
+  .section-block {
+    @apply relative py-20 md:py-28;
+  }
+
+  .glass-panel {
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0.03));
+    border: 1px solid var(--border);
+    box-shadow: 0 24px 80px rgba(0, 0, 0, 0.25);
+    backdrop-filter: blur(20px);
+  }
+
+  .eyebrow {
+    @apply mb-4 inline-flex items-center gap-2 rounded-full border border-white/20 px-4 py-2 text-xs uppercase tracking-[0.34em] text-white/70;
+  }
+
+  .title-display {
+    font-family: 'Space Grotesk', sans-serif;
+    @apply text-4xl font-medium leading-none md:text-6xl lg:text-7xl;
+  }
+
+  .section-title {
+    font-family: 'Space Grotesk', sans-serif;
+    @apply text-3xl font-medium leading-tight md:text-5xl;
+  }
+
+  .section-copy {
+    @apply max-w-2xl text-base leading-8 text-white/70 md:text-lg;
+  }
+
+  .primary-button {
+    @apply inline-flex items-center justify-center rounded-full px-6 py-3 text-sm font-medium text-white transition duration-300;
+    border: 1px solid rgba(0, 255, 255, 0.5);
+    background: rgba(0, 255, 255, 0.1);
+    box-shadow: 0 0 30px rgba(0, 255, 255, 0.15);
+  }
+
+  .primary-button:hover {
+    transform: translateY(-2px);
+    border-color: rgba(0, 255, 255, 1);
+    background: rgba(0, 255, 255, 0.2);
+  }
+
+  .secondary-button {
+    @apply inline-flex items-center justify-center rounded-full border border-white/20 bg-white/5 px-6 py-3 text-sm font-medium text-white/90 transition duration-300 hover:-translate-y-0.5 hover:border-white/40 hover:bg-white/10;
+  }
+
+  .input-field {
+    @apply w-full rounded-3xl border border-white/10 bg-white/5 px-5 py-4 text-white outline-none transition;
+  }
+
+  .input-field:focus {
+    border-color: rgba(0, 255, 255, 0.6);
+    background: rgba(255, 255, 255, 0.1);
+  }
+
+  .galaxy-nebula {
+    background:
+      radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.12), transparent 12%),
+      radial-gradient(circle at 32% 38%, rgba(0, 255, 255, 0.18), transparent 24%),
+      radial-gradient(circle at 68% 58%, rgba(255, 0, 255, 0.16), transparent 26%),
+      radial-gradient(circle at 55% 52%, rgba(0, 255, 255, 0.14), transparent 38%);
+    filter: blur(14px);
+  }
+
+  .galaxy-dust {
+    background:
+      radial-gradient(circle at 25% 25%, rgba(255, 255, 255, 0.16) 0 1px, transparent 1px),
+      radial-gradient(circle at 75% 30%, rgba(255, 255, 255, 0.12) 0 1px, transparent 1px),
+      radial-gradient(circle at 35% 75%, rgba(255, 255, 255, 0.14) 0 1px, transparent 1px),
+      radial-gradient(circle at 80% 70%, rgba(255, 255, 255, 0.12) 0 1px, transparent 1px);
+    background-size: 180px 180px, 220px 220px, 240px 240px, 260px 260px;
+    animation: dustShift 24s linear infinite;
+  }
+
+  .galaxy-core {
+    background:
+      radial-gradient(circle, rgba(255, 255, 255, 0.78) 0%, rgba(0, 255, 255, 0.42) 26%, rgba(255, 0, 255, 0.18) 52%, transparent 75%);
+    filter: blur(8px);
+    animation: corePulse 7s ease-in-out infinite;
+  }
+
+  .galaxy-ring {
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: inset 0 0 50px rgba(255, 255, 255, 0.04);
+  }
+
+  .galaxy-ring-one {
+    transform: translate(-50%, -50%) rotate(-18deg);
+    animation: galaxySpin 28s linear infinite;
+  }
+
+  .galaxy-ring-two {
+    transform: translate(-50%, -50%) rotate(12deg);
+    animation: galaxySpinReverse 36s linear infinite;
+  }
+
+  .galaxy-ring-three {
+    transform: translate(-50%, -50%) rotate(-10deg);
+    animation: galaxySpin 44s linear infinite;
+  }
+
+  .galaxy-language {
+    letter-spacing: 0.14em;
+  }
+
+  .galaxy-star {
+    box-shadow: 0 0 18px rgba(255, 255, 255, 0.6);
+    animation: starBlink 3.8s ease-in-out infinite;
+  }
+}
+
+@layer utilities {
+  .text-gradient {
+    background: linear-gradient(120deg, #ffffff 0%, #00ffff 45%, #ff00ff 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .floating-slow {
+    animation: drift 12s ease-in-out infinite;
+  }
+
+  .floating-medium {
+    animation: drift 10s ease-in-out infinite reverse;
+  }
+
+  .floating-fast {
+    animation: drift 8s ease-in-out infinite;
+  }
+
+  .galaxy-orbit-slow {
+    animation: drift 14s ease-in-out infinite;
+  }
+
+  .galaxy-orbit-medium {
+    animation: drift 10s ease-in-out infinite reverse;
+  }
+
+  .galaxy-orbit-fast {
+    animation: drift 8s ease-in-out infinite;
+  }
+}
+
+@keyframes drift {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) rotate(0deg);
+  }
+
+  50% {
+    transform: translate3d(0, -14px, 0) rotate(2deg);
+  }
+}
+
+@keyframes galaxySpin {
+  from {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+
+  to {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+
+@keyframes galaxySpinReverse {
+  from {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+
+  to {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+}
+
+@keyframes starBlink {
+  0%,
+  100% {
+    opacity: 0.35;
+    transform: scale(0.9);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(1.15);
+  }
+}
+
+@keyframes corePulse {
+  0%,
+  100% {
+    opacity: 0.8;
+    transform: translate(-50%, -50%) scale(0.96);
+  }
+
+  50% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1.08);
+  }
+}
+
+@keyframes dustShift {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+
+  50% {
+    transform: translate3d(-10px, 8px, 0);
+  }
+
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@media (max-width: 640px) {
+  .container-shell {
+    width: min(calc(100% - 1.25rem), var(--page-width));
+  }
+
+  .section-block {
+    padding-top: 4rem;
+    padding-bottom: 4rem;
+  }
+
+  .eyebrow {
+    gap: 0.35rem;
+    padding: 0.55rem 0.85rem;
+    letter-spacing: 0.2em;
+  }
+
+  .title-display {
+    line-height: 0.95;
+  }
+
+  .section-title {
+    line-height: 1.1;
+  }
+
+  .section-copy {
+    line-height: 1.9;
+  }
+
+  .galaxy-language {
+    padding: 0.45rem 0.7rem;
+    letter-spacing: 0.08em;
+  }
+
+  .galaxy-ring {
+    opacity: 0.7;
+  }
+}
