@@ -196,10 +196,10 @@ const planDefinitions: PlanDefinition[] = [
     id: "starter",
     name: { ja: "Starter Plan", en: "Starter Plan" },
     summary: {
-      ja: "初期費用を抑えてウェブサイトを始めたい方向け。",
-      en: "For businesses that want to start a website with the lowest upfront cost.",
+      ja: "サイトを公開するためのプラン。初期費用を抑えて、まずは公開したい方向けです。",
+      en: "A plan for getting your website launched with a lean starting point.",
     },
-    label: { ja: "Low Entry", en: "Low Entry" },
+    label: { ja: "Launch", en: "Launch" },
     monthlyFeeJpy: 10000,
     minimumContractMonths: 6,
     features: [
@@ -221,10 +221,10 @@ const planDefinitions: PlanDefinition[] = [
     id: "standard",
     name: { ja: "Standard Plan", en: "Standard Plan" },
     summary: {
-      ja: "更新頻度と機能の厚みをバランスよく整えたい方向け。",
-      en: "For businesses that want balanced support across features and update volume.",
+      ja: "サイトを運用するためのプラン。公開後も整えながら育てたい事業向けです。",
+      en: "A plan for operating the site well after launch with balanced ongoing support.",
     },
-    label: { ja: "おすすめ", en: "Recommended" },
+    label: { ja: "Business", en: "Business" },
     recommended: true,
     monthlyFeeJpy: 15000,
     minimumContractMonths: 6,
@@ -240,6 +240,10 @@ const planDefinitions: PlanDefinition[] = [
         ja: "更新（月4回まで）",
         en: "Content updates up to four times per month",
       },
+      {
+        ja: "アクセス解析導入（Google Analytics / Search Console）",
+        en: "Analytics setup with Google Analytics and Search Console",
+      },
       { ja: "運用管理", en: "Operational management" },
       { ja: "セキュリティ管理", en: "Security management" },
       { ja: "メールサポート", en: "Email support" },
@@ -249,10 +253,10 @@ const planDefinitions: PlanDefinition[] = [
     id: "growth",
     name: { ja: "Growth Plan", en: "Growth Plan" },
     summary: {
-      ja: "ビジネスの成長を見据えた上位プラン。",
-      en: "An upper-tier plan built for businesses preparing for growth.",
+      ja: "サイトで集客するためのプラン。改善とSEOを回しながら成長を狙う構成です。",
+      en: "A plan for using the site as a marketing channel with SEO and ongoing optimization.",
     },
-    label: { ja: "Scale", en: "Scale" },
+    label: { ja: "Marketing", en: "Marketing" },
     monthlyFeeJpy: 20000,
     minimumContractMonths: 6,
     features: [
@@ -262,8 +266,9 @@ const planDefinitions: PlanDefinition[] = [
       },
       { ja: "レスポンシブ対応", en: "Responsive support" },
       { ja: "SEO基本設定", en: "Basic SEO setup" },
-      { ja: "AIチャットボット導入", en: "AI chatbot setup" },
       { ja: "SEO簡易分析", en: "Light SEO analysis" },
+      { ja: "キーワード分析", en: "Keyword analysis" },
+      { ja: "SEOレポート（月1回）", en: "Monthly SEO report" },
       {
         ja: "更新（月8回まで）",
         en: "Content updates up to eight times per month",

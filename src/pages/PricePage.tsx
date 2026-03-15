@@ -12,15 +12,15 @@ export function PricePage() {
     ja: {
       eyebrow: "PRICE",
       title: "選びやすく、続けやすい3つの料金プラン。",
-      lead: "Starter、Standard、Growth の順に、入口の低さ、制作の厚み、成長対応を分けた構成です。Standard は最も選ばれやすい中間プランとして設計しています。",
+      lead: "Starter は公開、Standard は運用、Growth は集客という役割で分けています。機能数ではなく、サイトをどう使いたいかで選びやすい構成です。",
       monthlyFee: "月額",
       minimumContract: "最低契約期間",
       included: "含まれる内容",
-      recommendation: "おすすめ",
+      recommendation: "MOST POPULAR",
       noteTitle: "ご確認事項",
       ctaTitle: "どのプランが合うか迷う場合は、現状に合わせて整理します。",
       ctaBody:
-        "ページ数、更新頻度、AI導入の必要性まで含めて、Starter から Growth のどれが適切かを相談ベースで決められます。",
+        "公開したいのか、運用を整えたいのか、集客まで見たいのかを整理しながら、最適なプランを相談ベースで決められます。",
       ctaButton: "相談する",
       seoTitle: "PRICE",
       seoDescription:
@@ -29,16 +29,16 @@ export function PricePage() {
     en: {
       eyebrow: "PRICE",
       title: "Three plans designed to be easy to compare and easy to choose.",
-      lead: "Starter, Standard, and Growth are structured around low entry cost, stronger production support, and growth-oriented operations. Standard is positioned as the most balanced middle option.",
+      lead: "Starter is for launch, Standard is for operations, and Growth is for marketing. The plans are separated by role, not just by feature count.",
       monthlyFee: "Monthly fee",
       minimumContract: "Minimum term",
       included: "Included",
-      recommendation: "Recommended",
+      recommendation: "MOST POPULAR",
       noteTitle: "Important notes",
       ctaTitle:
         "If you're unsure which plan fits, we can map it to your current needs.",
       ctaBody:
-        "We can recommend Starter, Standard, or Growth after understanding your page count, update frequency, and whether AI support is needed.",
+        "We can recommend the right plan after clarifying whether you need launch support, operational support, or marketing support.",
       ctaButton: "Talk to us",
       seoTitle: "PRICE",
       seoDescription:
