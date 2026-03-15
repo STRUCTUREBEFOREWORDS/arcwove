@@ -8,6 +8,19 @@ Web制作会社 STRUCTURE のコーポレートサイトです。
 - Vite
 - TypeScript
 
+## Deployment
+
+GitHub Pages への公開は [ .github/workflows/deploy-pages.yml ] に固定しています。
+
+- `main` へ push すると GitHub Actions が `npm ci` → `npm run build` → Pages deploy を実行
+- Vite の公開ベースパスは [vite.config.ts](vite.config.ts) で `/VELIRO/` に設定済み
+- SPA の直リンク復帰は [public/404.html](public/404.html) で処理
+
+初回だけ GitHub 側で以下を確認してください。
+
+- Repository Settings → Pages → Source が `GitHub Actions`
+- 公開先 URL は `https://structurebeforewords.github.io/VELIRO/`
+
 ## Git Update
 
 最新版に保つための最短手順は [GIT_WORKFLOW.md](/home/sairen/デスクトップ/SAIREN/ウェブサイト制作会社/ウェブサイト会社/GIT_WORKFLOW.md) を参照してください。
