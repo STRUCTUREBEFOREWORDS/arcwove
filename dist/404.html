@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <title>STRUCTURE Redirect</title>
+    <script>
+      (function () {
+        var pathSegmentsToKeep = 1
+        var location = window.location
+        var basePath = location.pathname.slice(0, 1 + location.pathname.slice(1).indexOf('/'))
+        var route = location.pathname
+          .slice(basePath.length)
+          .replace(/&/g, '~and~')
+        var redirectUrl =
+          location.origin +
+          basePath +
+          '/?p=' +
+          route +
+          (location.search ? '&q=' + location.search.slice(1).replace(/&/g, '~and~') : '') +
+          location.hash
+
+        window.location.replace(redirectUrl)
+      })()
+    </script>
+  </head>
+  <body></body>
+</html>

@@ -9,27 +9,355 @@ import {
 import { useSitePreferences } from "../context/SitePreferences";
 import { usePageSeo } from "../hooks/usePageSeo";
 
-const galaxyStars = [
-  { top: '12%', left: '26%', size: 4 },
-  { top: '20%', left: '78%', size: 3 },
-  { top: '28%', left: '40%', size: 5 },
-  { top: '34%', left: '86%', size: 2 },
-  { top: '48%', left: '52%', size: 6 },
-  { top: '55%', left: '16%', size: 3 },
-  { top: '62%', left: '66%', size: 4 },
-  { top: '78%', left: '30%', size: 3 },
-  { top: '82%', left: '58%', size: 2 },
-]
+type LanguageTone = "cyan" | "white" | "magenta";
+type LanguageMotion = "slow" | "medium" | "fast";
 
-const codeRainColumns = [
-  ["<html>", "<body>", "<section>", "<h1>", "<p>", "<Link>", "</section>"],
-  ["const", "layout", "=", "{", "grid:", '"2col"', "}"],
-  ["function", "render()", "{", "return", "<Hero />", "}"],
-  ["import", "React", "from", '"react"', ";", "export"],
-  ["type", "Flow", "=", '"design"', "|", '"build"'],
-  ["npm", "run", "build", "git", "push", "origin"],
-  ["schema", "logic", "motion", "ui", "ux", "launch"],
-  ["API", "Route", "State", "Node", "Vite", "TS"],
+type HeroProfileToken = {
+  label: string;
+  top: string;
+  left: string;
+  tone: LanguageTone;
+  motion: LanguageMotion;
+  size: "sm" | "md" | "lg";
+};
+
+const heroProfileTokens: HeroProfileToken[] = [
+  {
+    label: "HTML",
+    top: "12%",
+    left: "32%",
+    tone: "white",
+    motion: "slow",
+    size: "sm",
+  },
+  {
+    label: "CSS",
+    top: "18%",
+    left: "27%",
+    tone: "cyan",
+    motion: "medium",
+    size: "sm",
+  },
+  {
+    label: "TS",
+    top: "9%",
+    left: "45%",
+    tone: "magenta",
+    motion: "fast",
+    size: "sm",
+  },
+  {
+    label: "React",
+    top: "15%",
+    left: "58%",
+    tone: "cyan",
+    motion: "medium",
+    size: "lg",
+  },
+  {
+    label: "JS",
+    top: "20%",
+    left: "70%",
+    tone: "white",
+    motion: "slow",
+    size: "sm",
+  },
+  {
+    label: "API",
+    top: "24%",
+    left: "80%",
+    tone: "magenta",
+    motion: "fast",
+    size: "sm",
+  },
+  {
+    label: "Go",
+    top: "30%",
+    left: "84%",
+    tone: "cyan",
+    motion: "medium",
+    size: "sm",
+  },
+  {
+    label: "Rust",
+    top: "35%",
+    left: "86%",
+    tone: "white",
+    motion: "slow",
+    size: "sm",
+  },
+  {
+    label: "C++",
+    top: "42%",
+    left: "89%",
+    tone: "magenta",
+    motion: "medium",
+    size: "sm",
+  },
+  {
+    label: "SQL",
+    top: "48%",
+    left: "84%",
+    tone: "cyan",
+    motion: "fast",
+    size: "sm",
+  },
+  {
+    label: "PHP",
+    top: "54%",
+    left: "87%",
+    tone: "white",
+    motion: "medium",
+    size: "sm",
+  },
+  {
+    label: "Ruby",
+    top: "60%",
+    left: "83%",
+    tone: "magenta",
+    motion: "slow",
+    size: "sm",
+  },
+  {
+    label: "Kotlin",
+    top: "67%",
+    left: "71%",
+    tone: "cyan",
+    motion: "medium",
+    size: "md",
+  },
+  {
+    label: "Swift",
+    top: "74%",
+    left: "62%",
+    tone: "white",
+    motion: "fast",
+    size: "md",
+  },
+  {
+    label: "Java",
+    top: "80%",
+    left: "52%",
+    tone: "magenta",
+    motion: "slow",
+    size: "md",
+  },
+  {
+    label: "Node",
+    top: "77%",
+    left: "40%",
+    tone: "cyan",
+    motion: "medium",
+    size: "md",
+  },
+  {
+    label: "Vite",
+    top: "70%",
+    left: "29%",
+    tone: "white",
+    motion: "fast",
+    size: "sm",
+  },
+  {
+    label: "GraphQL",
+    top: "84%",
+    left: "43%",
+    tone: "magenta",
+    motion: "slow",
+    size: "sm",
+  },
+  {
+    label: "Docker",
+    top: "66%",
+    left: "47%",
+    tone: "cyan",
+    motion: "medium",
+    size: "sm",
+  },
+  {
+    label: "Python",
+    top: "58%",
+    left: "52%",
+    tone: "white",
+    motion: "fast",
+    size: "md",
+  },
+  {
+    label: "Next",
+    top: "52%",
+    left: "59%",
+    tone: "magenta",
+    motion: "slow",
+    size: "sm",
+  },
+  {
+    label: "Vue",
+    top: "47%",
+    left: "62%",
+    tone: "cyan",
+    motion: "medium",
+    size: "sm",
+  },
+  {
+    label: "Nuxt",
+    top: "41%",
+    left: "64%",
+    tone: "white",
+    motion: "fast",
+    size: "sm",
+  },
+  {
+    label: "Sass",
+    top: "35%",
+    left: "66%",
+    tone: "magenta",
+    motion: "slow",
+    size: "sm",
+  },
+  {
+    label: "JSON",
+    top: "27%",
+    left: "50%",
+    tone: "cyan",
+    motion: "medium",
+    size: "sm",
+  },
+  {
+    label: "Linux",
+    top: "24%",
+    left: "61%",
+    tone: "white",
+    motion: "fast",
+    size: "sm",
+  },
+  {
+    label: "Git",
+    top: "21%",
+    left: "52%",
+    tone: "magenta",
+    motion: "slow",
+    size: "sm",
+  },
+  {
+    label: "Rails",
+    top: "30%",
+    left: "45%",
+    tone: "cyan",
+    motion: "medium",
+    size: "sm",
+  },
+  {
+    label: "Astro",
+    top: "36%",
+    left: "43%",
+    tone: "white",
+    motion: "fast",
+    size: "sm",
+  },
+  {
+    label: "C#",
+    top: "42%",
+    left: "41%",
+    tone: "magenta",
+    motion: "slow",
+    size: "sm",
+  },
+  {
+    label: "UI",
+    top: "48%",
+    left: "39%",
+    tone: "cyan",
+    motion: "medium",
+    size: "sm",
+  },
+  {
+    label: "UX",
+    top: "54%",
+    left: "36%",
+    tone: "white",
+    motion: "fast",
+    size: "sm",
+  },
+  {
+    label: "CLI",
+    top: "60%",
+    left: "34%",
+    tone: "magenta",
+    motion: "slow",
+    size: "sm",
+  },
+  {
+    label: "SSR",
+    top: "66%",
+    left: "33%",
+    tone: "cyan",
+    motion: "medium",
+    size: "sm",
+  },
+  {
+    label: "SPA",
+    top: "58%",
+    left: "30%",
+    tone: "white",
+    motion: "fast",
+    size: "sm",
+  },
+  {
+    label: "CMS",
+    top: "48%",
+    left: "29%",
+    tone: "magenta",
+    motion: "slow",
+    size: "sm",
+  },
+  {
+    label: "SEO",
+    top: "39%",
+    left: "31%",
+    tone: "cyan",
+    motion: "medium",
+    size: "sm",
+  },
+  {
+    label: "Figma",
+    top: "29%",
+    left: "33%",
+    tone: "white",
+    motion: "fast",
+    size: "sm",
+  },
+  {
+    label: "Node.js",
+    top: "23%",
+    left: "39%",
+    tone: "magenta",
+    motion: "slow",
+    size: "md",
+  },
+  {
+    label: "ML",
+    top: "45%",
+    left: "74%",
+    tone: "white",
+    motion: "medium",
+    size: "sm",
+  },
+  {
+    label: "WASM",
+    top: "63%",
+    left: "68%",
+    tone: "cyan",
+    motion: "fast",
+    size: "sm",
+  },
+  {
+    label: "AI",
+    top: "72%",
+    left: "55%",
+    tone: "magenta",
+    motion: "slow",
+    size: "sm",
+  },
 ];
 
 const pageScatterLanguages = [
@@ -169,6 +497,83 @@ const sectionLanguages = {
   ],
 } as const;
 
+function CodeProfilePortrait() {
+  return (
+    <div
+      className="code-profile-shell relative w-full max-w-[34rem] home-reveal"
+      style={{ animationDelay: "0.18s" }}
+      aria-hidden="true"
+    >
+      <div className="code-profile-glow code-profile-glow-cyan" />
+      <div className="code-profile-glow code-profile-glow-magenta" />
+      <div className="code-profile-grid" />
+      <svg
+        className="code-profile-outline"
+        viewBox="0 0 100 100"
+        preserveAspectRatio="none"
+      >
+        <path d="M27 13C20 18 17 29 17 41C17 54 21 67 29 77C35 85 45 91 57 93C65 94 72 92 76 89C71 83 69 77 70 71C77 68 81 63 83 58C78 56 74 54 71 51C78 49 83 46 88 43C81 40 76 37 71 34C73 29 72 23 67 19C61 13 49 11 38 11C34 11 30 12 27 13Z" />
+        <path className="code-profile-detail" d="M57 29C61 27 65 28 67 31" />
+        <path className="code-profile-detail" d="M61 35C64 40 64 45 61 50" />
+        <path className="code-profile-detail" d="M63 49C67 48 70 49 72 51" />
+        <path className="code-profile-detail" d="M64 56C69 56 73 58 75 61" />
+        <path className="code-profile-detail" d="M60 63C65 65 68 68 69 73" />
+      </svg>
+      <svg
+        className="code-profile-outline code-profile-outline-secondary"
+        viewBox="0 0 100 100"
+        preserveAspectRatio="none"
+      >
+        <path d="M66 71C68 78 72 84 79 88" />
+      </svg>
+      <div className="code-profile-signature">
+        <span className="code-profile-signature-label">Synthetic Mood</span>
+        <strong className="code-profile-signature-value">
+          Sharp / Silent / Precise
+        </strong>
+      </div>
+      {heroProfileTokens.map((token, index) => (
+        <span
+          key={`${token.label}-${token.top}-${token.left}`}
+          style={{
+            top: token.top,
+            left: token.left,
+            animationDelay: `${index * -0.22}s`,
+          }}
+          className={[
+            "code-profile-token",
+            token.motion === "slow"
+              ? "floating-slow"
+              : token.motion === "medium"
+                ? "floating-medium"
+                : "floating-fast",
+            token.tone === "cyan"
+              ? "code-profile-token-cyan"
+              : token.tone === "magenta"
+                ? "code-profile-token-magenta"
+                : "code-profile-token-white",
+            token.size === "lg"
+              ? "code-profile-token-lg"
+              : token.size === "md"
+                ? "code-profile-token-md"
+                : "code-profile-token-sm",
+          ].join(" ")}
+        >
+          {token.label}
+        </span>
+      ))}
+      <div className="code-profile-meta">
+        <span>HTML</span>
+        <span>CSS</span>
+        <span>JavaScript</span>
+        <span>TypeScript</span>
+        <span>React</span>
+        <span>Node.js</span>
+      </div>
+    </div>
+  );
+}
+
 function LanguageScatter({
   items,
 }: {
@@ -176,8 +581,8 @@ function LanguageScatter({
     label: string;
     top: string;
     left: string;
-    tone: "cyan" | "white" | "magenta";
-    motion: "slow" | "medium" | "fast";
+    tone: LanguageTone;
+    motion: LanguageMotion;
   }>;
 }) {
   return (
@@ -299,111 +704,69 @@ export function HomePage() {
       <div className="relative z-10">
         <section className="home-hero-stage section-block overflow-hidden pt-20 md:pt-28">
           <div className="hero-scanline" aria-hidden="true" />
-          <div className="hero-code-rain" aria-hidden="true">
-            {codeRainColumns.map((column, index) => (
-              <div
-                key={`column-${index}`}
-                className={[
-                  "code-rain-column",
-                  index % 2 === 0 ? "code-rain-fast" : "code-rain-slow",
-                  index % 3 === 0
-                    ? "code-rain-cyan"
-                    : index % 3 === 1
-                      ? "code-rain-white"
-                      : "code-rain-magenta",
-                ].join(" ")}
-                style={{
-                  left: `${4 + index * 11.5}%`,
-                  animationDelay: `${index * -1.8}s`,
-                }}
-              >
-                {[...column, ...column, ...column].map((token, tokenIndex) => (
-                  <span
-                    key={`${token}-${tokenIndex}`}
-                    className="code-rain-token"
-                  >
-                    {token}
-                  </span>
-                ))}
-              </div>
-            ))}
-          </div>
           <div className="hero-stage-nebula galaxy-nebula" aria-hidden="true" />
           <div
             className="hero-stage-dust galaxy-dust opacity-80"
             aria-hidden="true"
           />
-          <div className="galaxy-core absolute left-1/2 top-[42%] h-28 w-28 -translate-x-1/2 -translate-y-1/2 rounded-full sm:h-36 sm:w-36 md:h-40 md:w-40" />
-          <div className="galaxy-ring galaxy-ring-one absolute left-1/2 top-[42%] h-[12rem] w-[70vw] max-w-[30rem] -translate-x-1/2 -translate-y-1/2 rounded-full sm:h-[14rem] md:h-[16rem]" />
-          <div className="galaxy-ring galaxy-ring-two absolute left-1/2 top-[42%] h-[18rem] w-[88vw] max-w-[48rem] -translate-x-1/2 -translate-y-1/2 rounded-full sm:h-[22rem] md:h-[24rem]" />
-          <div className="galaxy-ring galaxy-ring-three absolute left-1/2 top-[42%] h-[26rem] w-[96vw] max-w-[70rem] -translate-x-1/2 -translate-y-1/2 rounded-full opacity-70" />
-
-          <div className="container-shell relative min-h-[32rem] sm:min-h-[38rem] md:min-h-[42rem]">
-            <div className="home-hero-copy relative z-10 mx-auto flex min-h-[32rem] max-w-4xl flex-col items-center justify-center text-center sm:min-h-[38rem] md:min-h-[42rem]">
-              <div
-                className="home-hero-aura home-hero-aura-left"
-                aria-hidden="true"
-              />
-              <div
-                className="home-hero-aura home-hero-aura-right"
-                aria-hidden="true"
-              />
-              <span
-                className="eyebrow home-reveal"
-                style={{ animationDelay: "0.08s" }}
-              >
-                {copy.eyebrow}
-              </span>
-              <h1
-                className="title-display home-reveal max-w-4xl"
-                style={{ animationDelay: "0.16s" }}
-              >
-                <span className="matrix-title-line">
-                  <span className="matrix-title-copy">{copy.heroTitleTop}</span>
+          <div className="container-shell relative">
+            <div className="home-hero-layout relative z-10 min-h-[32rem] items-center gap-12 sm:min-h-[38rem] md:min-h-[42rem] lg:grid lg:grid-cols-[minmax(0,0.92fr)_minmax(22rem,0.9fr)] lg:gap-10 xl:grid-cols-[minmax(0,1fr)_minmax(28rem,0.92fr)]">
+              <div className="home-hero-copy relative z-10 flex min-h-[20rem] max-w-3xl flex-col items-center justify-center text-center lg:min-h-[42rem] lg:items-start lg:justify-center lg:text-left">
+                <div
+                  className="home-hero-aura home-hero-aura-left"
+                  aria-hidden="true"
+                />
+                <div
+                  className="home-hero-aura home-hero-aura-right"
+                  aria-hidden="true"
+                />
+                <span
+                  className="eyebrow home-reveal"
+                  style={{ animationDelay: "0.08s" }}
+                >
+                  {copy.eyebrow}
                 </span>
-                <br />
-                <span className="matrix-title-line matrix-title-line-accent">
-                  <span className="matrix-title-copy">
-                    {copy.heroTitleBottom}
+                <h1
+                  className="title-display home-reveal max-w-4xl"
+                  style={{ animationDelay: "0.16s" }}
+                >
+                  <span className="matrix-title-line">
+                    <span className="matrix-title-copy">
+                      {copy.heroTitleTop}
+                    </span>
                   </span>
-                </span>
-              </h1>
-              <p
-                className="home-reveal mx-auto mt-6 max-w-xl text-xl leading-9 text-white/70 md:text-2xl lg:mx-0"
-                style={{ animationDelay: "0.24s" }}
-              >
-                {copy.heroLead.split("\n").map((line, index) => (
-                  <span key={line}>
-                    {index > 0 ? <br /> : null}
-                    {line}
+                  <br />
+                  <span className="matrix-title-line matrix-title-line-accent">
+                    <span className="matrix-title-copy">
+                      {copy.heroTitleBottom}
+                    </span>
                   </span>
-                ))}
-              </p>
-              <div
-                className="home-reveal mt-10 flex flex-wrap justify-center gap-4"
-                style={{ animationDelay: "0.32s" }}
-              >
-                <Link to="/contact" className="primary-button">
-                  {copy.contactCta}
-                </Link>
-                <Link to="/price" className="secondary-button">
-                  {copy.priceCta}
-                </Link>
+                </h1>
+                <p
+                  className="home-reveal mx-auto mt-6 max-w-xl text-xl leading-9 text-white/70 md:text-2xl lg:mx-0"
+                  style={{ animationDelay: "0.24s" }}
+                >
+                  {copy.heroLead.split("\n").map((line, index) => (
+                    <span key={line}>
+                      {index > 0 ? <br /> : null}
+                      {line}
+                    </span>
+                  ))}
+                </p>
+                <div
+                  className="home-reveal mt-10 flex flex-wrap justify-center gap-4 lg:justify-start"
+                  style={{ animationDelay: "0.32s" }}
+                >
+                  <Link to="/contact" className="primary-button">
+                    {copy.contactCta}
+                  </Link>
+                  <Link to="/price" className="secondary-button">
+                    {copy.priceCta}
+                  </Link>
+                </div>
               </div>
-              <div className="pointer-events-none absolute inset-0">
-                {galaxyStars.map((star, index) => (
-                  <span
-                    key={`${star.top}-${star.left}`}
-                    className="galaxy-star absolute rounded-full bg-white/80"
-                    style={{
-                      top: star.top,
-                      left: star.left,
-                      width: `${star.size}px`,
-                      height: `${star.size}px`,
-                      animationDelay: `${index * 0.5}s`,
-                    }}
-                  />
-                ))}
+              <div className="relative z-10 flex justify-center pb-6 lg:justify-end lg:pb-0">
+                <CodeProfilePortrait />
               </div>
             </div>
           </div>

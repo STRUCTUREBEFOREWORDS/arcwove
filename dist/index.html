@@ -19,8 +19,25 @@
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:image" content="https://structurebeforewords.github.io/VELIRO/og-image.svg" />
     <title>STRUCTURE | 構造から設計する Web制作会社</title>
-    <script type="module" crossorigin src="/assets/index-CruzC8vx.js"></script>
-    <link rel="stylesheet" crossorigin href="/assets/index-kSAdObnj.css">
+    <script>
+      (function () {
+        const redirect = new URL(window.location.href)
+        const route = redirect.searchParams.get('p')
+
+        if (!route) {
+          return
+        }
+
+        const decodedPath = route.replace(/~and~/g, '&')
+        const query = redirect.searchParams.get('q')
+        const hash = redirect.hash || ''
+        const nextUrl = decodedPath + (query ? '?' + query : '') + hash
+
+        window.history.replaceState(null, '', nextUrl)
+      })()
+    </script>
+    <script type="module" crossorigin src="/VELIRO/assets/index-DAAezAn1.js"></script>
+    <link rel="stylesheet" crossorigin href="/VELIRO/assets/index-BEE0_u1O.css">
   </head>
   <body>
     <div id="root"></div>
