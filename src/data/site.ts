@@ -13,10 +13,11 @@ export type NavItem = {
 };
 
 type PlanDefinition = {
-  id: "subscription" | "standard";
+  id: "starter" | "standard" | "growth";
   name: LocalizedText;
   summary: LocalizedText;
   label: LocalizedText;
+  recommended?: boolean;
   setupFeeJpy: number;
   monthlyFeeJpy: number;
   minimumContractMonths: number;
@@ -28,11 +29,17 @@ export type Plan = {
   name: string;
   summary: string;
   label: string;
+  recommended: boolean;
   setupFee: string;
   monthlyFee: string;
   minimumContract: string;
   minimumTotal: string;
   features: string[];
+};
+
+export type PricingNote = {
+  id: "updates" | "hosting" | "contract";
+  text: string;
 };
 
 type PaymentMethodDefinition = {
@@ -169,39 +176,87 @@ export function getHomeSections(locale: Locale) {
 
 const planDefinitions: PlanDefinition[] = [
   {
-    id: "subscription",
-    name: { ja: "Subscription Plan", en: "Subscription Plan" },
+    id: "starter",
+    name: { ja: "Starter Plan", en: "Starter Plan" },
     summary: {
-      ja: "初期費用を抑えて始めたい顧客向けの月額契約です。",
-      en: "A monthly contract for clients who want to launch with no upfront cost.",
+      ja: "初期費用を抑えてウェブサイトを始めたい方向け。",
+      en: "For businesses that want to start a website with the lowest upfront cost.",
     },
-    label: { ja: "初期費用 0円", en: "Zero upfront cost" },
+    label: { ja: "Low Entry", en: "Low Entry" },
     setupFeeJpy: 0,
     monthlyFeeJpy: 10000,
     minimumContractMonths: 6,
     features: [
-      { ja: "ウェブサイト制作", en: "Website production" },
-      { ja: "軽微修正", en: "Minor revisions" },
-      { ja: "運用サポート", en: "Operational support" },
+      {
+        ja: "ウェブサイト制作（最大5ページ）",
+        en: "Website production up to 5 pages",
+      },
+      {
+        ja: "レスポンシブ対応（スマホ最適化）",
+        en: "Responsive support for mobile optimization",
+      },
+      { ja: "SEO基本設定", en: "Basic SEO setup" },
+      { ja: "更新（月2回まで）", en: "Content updates up to twice per month" },
       { ja: "セキュリティ管理", en: "Security management" },
+      { ja: "メールサポート", en: "Email support" },
     ],
   },
   {
     id: "standard",
     name: { ja: "Standard Plan", en: "Standard Plan" },
     summary: {
-      ja: "制作費を支払って始め、その後は月額保守で運用する契約です。",
-      en: "A production fee plus monthly maintenance model for clients who want to pay once to start.",
+      ja: "制作費を支払って、しっかりサイトを作りたい方向け。",
+      en: "For businesses that want a more complete site with a production fee up front.",
     },
-    label: { ja: "制作 + 保守", en: "Production + maintenance" },
+    label: { ja: "おすすめ", en: "Recommended" },
+    recommended: true,
     setupFeeJpy: 50000,
     monthlyFeeJpy: 10000,
     minimumContractMonths: 6,
     features: [
-      { ja: "ウェブサイト制作", en: "Website production" },
+      {
+        ja: "ウェブサイト制作（最大8ページ）",
+        en: "Website production up to 8 pages",
+      },
+      { ja: "レスポンシブ対応", en: "Responsive support" },
+      { ja: "SEO基本設定", en: "Basic SEO setup" },
+      { ja: "AIチャットボット導入", en: "AI chatbot setup" },
+      {
+        ja: "更新（月4回まで）",
+        en: "Content updates up to four times per month",
+      },
       { ja: "運用管理", en: "Operational management" },
-      { ja: "軽微修正", en: "Minor revisions" },
       { ja: "セキュリティ管理", en: "Security management" },
+      { ja: "メールサポート", en: "Email support" },
+    ],
+  },
+  {
+    id: "growth",
+    name: { ja: "Growth Plan", en: "Growth Plan" },
+    summary: {
+      ja: "ビジネスの成長を見据えた上位プラン。",
+      en: "An upper-tier plan built for businesses preparing for growth.",
+    },
+    label: { ja: "Scale", en: "Scale" },
+    setupFeeJpy: 100000,
+    monthlyFeeJpy: 15000,
+    minimumContractMonths: 6,
+    features: [
+      {
+        ja: "ウェブサイト制作（最大12ページ）",
+        en: "Website production up to 12 pages",
+      },
+      { ja: "レスポンシブ対応", en: "Responsive support" },
+      { ja: "SEO基本設定", en: "Basic SEO setup" },
+      { ja: "AIチャットボット導入", en: "AI chatbot setup" },
+      { ja: "SEO簡易分析", en: "Light SEO analysis" },
+      {
+        ja: "更新（月8回まで）",
+        en: "Content updates up to eight times per month",
+      },
+      { ja: "運用管理", en: "Operational management" },
+      { ja: "月次サイトチェック", en: "Monthly site check" },
+      { ja: "優先サポート", en: "Priority support" },
     ],
   },
 ];
@@ -212,6 +267,7 @@ export function getPlans(locale: Locale, currency: CurrencyCode): Plan[] {
     name: translateText(plan.name, locale),
     summary: translateText(plan.summary, locale),
     label: translateText(plan.label, locale),
+    recommended: Boolean(plan.recommended),
     setupFee: formatPrice(plan.setupFeeJpy, currency, locale),
     monthlyFee: formatPrice(plan.monthlyFeeJpy, currency, locale),
     minimumContract:
@@ -224,6 +280,37 @@ export function getPlans(locale: Locale, currency: CurrencyCode): Plan[] {
       locale,
     ),
     features: plan.features.map((feature) => translateText(feature, locale)),
+  }));
+}
+
+const pricingNoteDefinitions = [
+  {
+    id: "updates" as const,
+    text: {
+      ja: "※更新はテキスト変更・画像差し替えなどの軽微な内容になります",
+      en: "Updates cover light changes such as text edits and image replacement.",
+    },
+  },
+  {
+    id: "hosting" as const,
+    text: {
+      ja: "※ドメイン・サーバー費用は別途必要です",
+      en: "Domain and hosting fees are billed separately.",
+    },
+  },
+  {
+    id: "contract" as const,
+    text: {
+      ja: "※最低契約期間は6ヶ月となります",
+      en: "The minimum contract term is six months.",
+    },
+  },
+];
+
+export function getPricingNotes(locale: Locale): PricingNote[] {
+  return pricingNoteDefinitions.map((note) => ({
+    id: note.id,
+    text: translateText(note.text, locale),
   }));
 }
 
@@ -273,8 +360,8 @@ const processStepDefinitions: ProcessStepDefinition[] = [
     step: "STEP3",
     title: { ja: "プラン選択", en: "Plan Selection" },
     body: {
-      ja: "サブスクリプション型か制作＋保守型かを選び、契約条件と開始スケジュールを固めます。",
-      en: "We choose either the subscription plan or the production plus maintenance plan and lock the project terms.",
+      ja: "Starter、Standard、Growth の中から事業規模と必要機能に合うプランを選び、開始条件を固めます。",
+      en: "We choose between Starter, Standard, and Growth based on business stage and required features, then lock the start conditions.",
     },
   },
   {

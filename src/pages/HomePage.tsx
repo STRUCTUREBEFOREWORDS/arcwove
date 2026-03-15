@@ -616,7 +616,7 @@ export function HomePage() {
       processTitle: "問い合わせから月額保守まで、契約と決済の流れを見せる。",
       processLink: "詳細を見る",
       priceEyebrow: "PRICE OVERVIEW",
-      priceTitle: "選択肢は2つだけ。初期費用0円か、制作費＋月額保守か。",
+      priceTitle: "Starter、Standard、Growth の3プランで、選びやすく整理する。",
       priceLink: "価格詳細へ",
       sampleEyebrow: "SAMPLE",
       sampleTitle: "30サンプルで、構造設計の表現幅を提示する。",
@@ -642,8 +642,7 @@ export function HomePage() {
         "Show the path from inquiry to monthly maintenance, including contract and payment.",
       processLink: "View details",
       priceEyebrow: "PRICE OVERVIEW",
-      priceTitle:
-        "Only two options: zero-upfront subscription or production plus monthly maintenance.",
+      priceTitle: "Three pricing plans: Starter, Standard, and Growth.",
       priceLink: "Pricing details",
       sampleEyebrow: "SAMPLES",
       sampleTitle:
@@ -816,15 +815,13 @@ export function HomePage() {
               </Link>
             </div>
 
-            <div className="relative z-10 grid gap-5 lg:grid-cols-2">
+            <div className="relative z-10 grid gap-5 xl:grid-cols-3">
               {plans.map((plan, index) => (
                 <article
                   key={plan.name}
                   className={[
                     "glass-panel home-panel-reveal rounded-[2rem] p-8",
-                    plan.id === "subscription"
-                      ? "border-cyan-300/40 bg-cyan-300/10"
-                      : "",
+                    plan.recommended ? "border-cyan-300/40 bg-cyan-300/10" : "",
                   ].join(" ")}
                   style={{ animationDelay: `${0.1 + index * 0.08}s` }}
                 >
@@ -832,7 +829,14 @@ export function HomePage() {
                     <p className="font-['Space_Grotesk'] text-2xl">
                       {plan.name}
                     </p>
-                    <span className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-[0.68rem] uppercase tracking-[0.2em] text-white/55">
+                    <span
+                      className={[
+                        "rounded-full border px-3 py-1 text-[0.68rem] uppercase tracking-[0.2em]",
+                        plan.recommended
+                          ? "border-cyan-300/30 bg-cyan-300/15 text-cyan-200"
+                          : "border-white/10 bg-white/5 text-white/55",
+                      ].join(" ")}
+                    >
                       {plan.label}
                     </span>
                   </div>
@@ -871,7 +875,7 @@ export function HomePage() {
                     </p>
                   </div>
                   <ul className="mt-6 space-y-3 text-sm text-white/70">
-                    {plan.features.slice(0, 4).map((feature) => (
+                    {plan.features.slice(0, 5).map((feature) => (
                       <li
                         key={feature}
                         className="rounded-2xl border border-white/10 px-4 py-3"
