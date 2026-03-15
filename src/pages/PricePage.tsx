@@ -166,6 +166,143 @@ export function PricePage() {
   };
 
   const rowOrder = ["role", "bestFor", "pageScale", "updates", "analytics", "seo", "support"] as const;
+  type ComparisonRowKey = (typeof rowOrder)[number];
+
+  const getCellAccent = (planId: string) => {
+    switch (planId) {
+      case "starter":
+        return "border-white/15 bg-white/10";
+      case "standard":
+        return "border-cyan-300/30 bg-cyan-300/15";
+      case "growth":
+        return "border-emerald-300/30 bg-emerald-300/15";
+      default:
+        return "border-white/15 bg-white/10";
+    }
+  };
+
+  const renderComparisonIcon = (
+    rowKey: ComparisonRowKey,
+    planId: "starter" | "standard" | "growth",
+  ) => {
+    const accent = getCellAccent(planId);
+
+    if (rowKey === "role") {
+      return (
+        <span
+          aria-hidden="true"
+          className={[
+            "inline-flex h-8 w-8 items-center justify-center rounded-full border",
+            accent,
+          ].join(" ")}
+        >
+          <span className="h-2.5 w-2.5 rounded-full bg-white/80" />
+        </span>
+      );
+    }
+
+    if (rowKey === "bestFor") {
+      return (
+        <span
+          aria-hidden="true"
+          className={[
+            "inline-flex h-8 w-8 items-center justify-center rounded-full border",
+            accent,
+          ].join(" ")}
+        >
+          <span className="relative block h-3.5 w-3.5 rounded-full border border-white/70">
+            <span className="absolute left-1/2 top-1/2 h-1.5 w-1.5 -translate-x-1/2 -translate-y-1/2 rounded-full bg-white/80" />
+          </span>
+        </span>
+      );
+    }
+
+    if (rowKey === "pageScale") {
+      return (
+        <span
+          aria-hidden="true"
+          className={[
+            "inline-flex h-8 w-8 items-center justify-center rounded-full border",
+            accent,
+          ].join(" ")}
+        >
+          <span className="flex items-end gap-[2px]">
+            <span className="h-2 w-[3px] rounded-full bg-white/55" />
+            <span className="h-3 w-[3px] rounded-full bg-white/70" />
+            <span className="h-4 w-[3px] rounded-full bg-white/85" />
+          </span>
+        </span>
+      );
+    }
+
+    if (rowKey === "updates") {
+      return (
+        <span
+          aria-hidden="true"
+          className={[
+            "inline-flex h-8 w-8 items-center justify-center rounded-full border",
+            accent,
+          ].join(" ")}
+        >
+          <span className="flex gap-[3px]">
+            <span className="h-1.5 w-1.5 rounded-full bg-white/55" />
+            <span className="h-1.5 w-1.5 rounded-full bg-white/70" />
+            <span className="h-1.5 w-1.5 rounded-full bg-white/85" />
+          </span>
+        </span>
+      );
+    }
+
+    if (rowKey === "analytics") {
+      return (
+        <span
+          aria-hidden="true"
+          className={[
+            "inline-flex h-8 w-8 items-center justify-center rounded-full border",
+            accent,
+          ].join(" ")}
+        >
+          <span className="flex items-end gap-[2px]">
+            <span className="h-2 w-[3px] rounded-full bg-white/55" />
+            <span className="h-4 w-[3px] rounded-full bg-white/70" />
+            <span className="h-2.5 w-[3px] rounded-full bg-white/85" />
+          </span>
+        </span>
+      );
+    }
+
+    if (rowKey === "seo") {
+      return (
+        <span
+          aria-hidden="true"
+          className={[
+            "inline-flex h-8 w-8 items-center justify-center rounded-full border",
+            accent,
+          ].join(" ")}
+        >
+          <span className="relative block h-3.5 w-3.5 rounded-full border border-white/75">
+            <span className="absolute -bottom-[3px] -right-[3px] h-1.5 w-1.5 rounded-full bg-white/80" />
+          </span>
+        </span>
+      );
+    }
+
+    return (
+      <span
+        aria-hidden="true"
+        className={[
+          "inline-flex h-8 w-8 items-center justify-center rounded-full border",
+          accent,
+        ].join(" ")}
+      >
+        <span className="flex flex-col gap-[2px]">
+          <span className="h-[2px] w-3 rounded-full bg-white/85" />
+          <span className="h-[2px] w-3 rounded-full bg-white/70" />
+          <span className="h-[2px] w-3 rounded-full bg-white/55" />
+        </span>
+      </span>
+    );
+  };
 
   usePageSeo({
     title: copy.seoTitle,
@@ -311,7 +448,10 @@ export function PricePage() {
                         selectedPlanId === plan.id ? "bg-emerald-300/10" : "",
                       ].join(" ")}
                     >
-                      {comparisonRows[plan.id][rowKey]}
+                      <div className="flex items-start gap-3">
+                        {renderComparisonIcon(rowKey, plan.id)}
+                        <span>{comparisonRows[plan.id][rowKey]}</span>
+                      </div>
                     </div>
                   ))}
                 </div>
@@ -340,9 +480,10 @@ export function PricePage() {
                       <p className="text-[0.68rem] uppercase tracking-[0.18em] text-white/45">
                         {copy.rows[rowKey]}
                       </p>
-                      <p className="mt-2 text-sm leading-7 text-white/75">
-                        {comparisonRows[plan.id][rowKey]}
-                      </p>
+                      <div className="mt-2 flex items-start gap-3 text-sm leading-7 text-white/75">
+                        {renderComparisonIcon(rowKey, plan.id)}
+                        <p>{comparisonRows[plan.id][rowKey]}</p>
+                      </div>
                     </div>
                   ))}
                 </div>
