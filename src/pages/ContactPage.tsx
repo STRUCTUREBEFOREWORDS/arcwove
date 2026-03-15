@@ -1,4 +1,5 @@
 import { useMemo, useState, type FormEvent } from 'react'
+import { Link } from 'react-router-dom'
 import {
   getContactInquiryFormFields,
   getContactProjectRecommendation,
@@ -36,6 +37,7 @@ export function ContactPage() {
         placeholder: "選択してください",
         mailPlanLabel: "自動提案プラン",
         mailReasonLabel: "提案理由",
+        compareButton: "比較表で詳しく見る",
       },
       submit: "送信する",
       sending: "送信中...",
@@ -71,6 +73,7 @@ export function ContactPage() {
         placeholder: "Select an option",
         mailPlanLabel: "Recommended plan",
         mailReasonLabel: "Recommendation reasons",
+        compareButton: "Open comparison table",
       },
       submit: "Send",
       sending: "Sending...",
@@ -322,6 +325,14 @@ export function ContactPage() {
                       </p>
                     ))}
                   </div>
+                </div>
+                <div className="mt-4 flex flex-wrap gap-3">
+                  <Link
+                    to={`/price?recommended=${recommendation.planId}`}
+                    className="secondary-button"
+                  >
+                    {copy.recommendation.compareButton}
+                  </Link>
                 </div>
               </div>
             ) : null}
