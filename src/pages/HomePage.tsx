@@ -1,4 +1,5 @@
-import { Link } from 'react-router-dom'
+import type { CSSProperties } from "react";
+import { Link } from "react-router-dom";
 import {
   getHomeSections,
   getPlans,
@@ -12,353 +13,284 @@ import { usePageSeo } from "../hooks/usePageSeo";
 type LanguageTone = "cyan" | "white" | "magenta";
 type LanguageMotion = "slow" | "medium" | "fast";
 
-type HeroProfileToken = {
+type HeroMeteor = {
   label: string;
   top: string;
   left: string;
-  tone: LanguageTone;
-  motion: LanguageMotion;
-  size: "sm" | "md" | "lg";
+  angle: string;
+  duration: string;
+  delay: string;
+  length: string;
+  hue: number;
+  size: string;
 };
 
-const heroProfileTokens: HeroProfileToken[] = [
+const heroMeteorStreams: HeroMeteor[] = [
   {
-    label: "HTML",
-    top: "12%",
-    left: "32%",
-    tone: "white",
-    motion: "slow",
-    size: "sm",
-  },
-  {
-    label: "CSS",
-    top: "18%",
-    left: "27%",
-    tone: "cyan",
-    motion: "medium",
-    size: "sm",
-  },
-  {
-    label: "TS",
-    top: "9%",
-    left: "45%",
-    tone: "magenta",
-    motion: "fast",
-    size: "sm",
+    label: "TypeScript",
+    top: "14%",
+    left: "4%",
+    angle: "-28deg",
+    duration: "8.8s",
+    delay: "-1.8s",
+    length: "16rem",
+    hue: 192,
+    size: "0.92rem",
   },
   {
     label: "React",
-    top: "15%",
-    left: "58%",
-    tone: "cyan",
-    motion: "medium",
-    size: "lg",
+    top: "22%",
+    left: "18%",
+    angle: "-24deg",
+    duration: "10.2s",
+    delay: "-4.6s",
+    length: "13rem",
+    hue: 202,
+    size: "0.86rem",
   },
   {
-    label: "JS",
-    top: "20%",
-    left: "70%",
-    tone: "white",
-    motion: "slow",
-    size: "sm",
-  },
-  {
-    label: "API",
-    top: "24%",
-    left: "80%",
-    tone: "magenta",
-    motion: "fast",
-    size: "sm",
+    label: "Python",
+    top: "10%",
+    left: "34%",
+    angle: "-34deg",
+    duration: "9.4s",
+    delay: "-2.4s",
+    length: "15rem",
+    hue: 55,
+    size: "0.9rem",
   },
   {
     label: "Go",
     top: "30%",
-    left: "84%",
-    tone: "cyan",
-    motion: "medium",
-    size: "sm",
+    left: "8%",
+    angle: "-18deg",
+    duration: "7.9s",
+    delay: "-5.2s",
+    length: "11rem",
+    hue: 182,
+    size: "0.74rem",
   },
   {
     label: "Rust",
-    top: "35%",
-    left: "86%",
-    tone: "white",
-    motion: "slow",
-    size: "sm",
+    top: "36%",
+    left: "28%",
+    angle: "-22deg",
+    duration: "11.6s",
+    delay: "-3.1s",
+    length: "14rem",
+    hue: 18,
+    size: "0.78rem",
   },
   {
-    label: "C++",
+    label: "Node.js",
     top: "42%",
-    left: "89%",
-    tone: "magenta",
-    motion: "medium",
-    size: "sm",
-  },
-  {
-    label: "SQL",
-    top: "48%",
-    left: "84%",
-    tone: "cyan",
-    motion: "fast",
-    size: "sm",
-  },
-  {
-    label: "PHP",
-    top: "54%",
-    left: "87%",
-    tone: "white",
-    motion: "medium",
-    size: "sm",
-  },
-  {
-    label: "Ruby",
-    top: "60%",
-    left: "83%",
-    tone: "magenta",
-    motion: "slow",
-    size: "sm",
-  },
-  {
-    label: "Kotlin",
-    top: "67%",
-    left: "71%",
-    tone: "cyan",
-    motion: "medium",
-    size: "md",
-  },
-  {
-    label: "Swift",
-    top: "74%",
-    left: "62%",
-    tone: "white",
-    motion: "fast",
-    size: "md",
-  },
-  {
-    label: "Java",
-    top: "80%",
-    left: "52%",
-    tone: "magenta",
-    motion: "slow",
-    size: "md",
-  },
-  {
-    label: "Node",
-    top: "77%",
-    left: "40%",
-    tone: "cyan",
-    motion: "medium",
-    size: "md",
-  },
-  {
-    label: "Vite",
-    top: "70%",
-    left: "29%",
-    tone: "white",
-    motion: "fast",
-    size: "sm",
+    left: "12%",
+    angle: "-31deg",
+    duration: "8.6s",
+    delay: "-6.4s",
+    length: "17rem",
+    hue: 128,
+    size: "0.88rem",
   },
   {
     label: "GraphQL",
-    top: "84%",
-    left: "43%",
-    tone: "magenta",
-    motion: "slow",
-    size: "sm",
+    top: "50%",
+    left: "26%",
+    angle: "-26deg",
+    duration: "12.4s",
+    delay: "-1.2s",
+    length: "15rem",
+    hue: 312,
+    size: "0.82rem",
+  },
+  {
+    label: "Next.js",
+    top: "58%",
+    left: "10%",
+    angle: "-20deg",
+    duration: "9.8s",
+    delay: "-7.1s",
+    length: "12rem",
+    hue: 0,
+    size: "0.76rem",
   },
   {
     label: "Docker",
     top: "66%",
-    left: "47%",
-    tone: "cyan",
-    motion: "medium",
-    size: "sm",
+    left: "22%",
+    angle: "-27deg",
+    duration: "10.8s",
+    delay: "-2.9s",
+    length: "14rem",
+    hue: 208,
+    size: "0.8rem",
   },
   {
-    label: "Python",
-    top: "58%",
-    left: "52%",
-    tone: "white",
-    motion: "fast",
-    size: "md",
+    label: "C++",
+    top: "74%",
+    left: "16%",
+    angle: "-16deg",
+    duration: "8.2s",
+    delay: "-5.8s",
+    length: "10rem",
+    hue: 226,
+    size: "0.74rem",
   },
   {
-    label: "Next",
-    top: "52%",
-    left: "59%",
-    tone: "magenta",
-    motion: "slow",
-    size: "sm",
+    label: "Swift",
+    top: "26%",
+    left: "46%",
+    angle: "-33deg",
+    duration: "9.1s",
+    delay: "-3.8s",
+    length: "13rem",
+    hue: 28,
+    size: "0.78rem",
+  },
+  {
+    label: "Kotlin",
+    top: "48%",
+    left: "46%",
+    angle: "-25deg",
+    duration: "11.1s",
+    delay: "-6.9s",
+    length: "16rem",
+    hue: 284,
+    size: "0.82rem",
+  },
+  {
+    label: "JavaScript",
+    top: "18%",
+    left: "58%",
+    angle: "-30deg",
+    duration: "6.8s",
+    delay: "-4.1s",
+    length: "18rem",
+    hue: 48,
+    size: "0.94rem",
   },
   {
     label: "Vue",
-    top: "47%",
-    left: "62%",
-    tone: "cyan",
-    motion: "medium",
-    size: "sm",
+    top: "34%",
+    left: "52%",
+    angle: "-21deg",
+    duration: "12.8s",
+    delay: "-8.4s",
+    length: "12rem",
+    hue: 146,
+    size: "0.76rem",
   },
   {
     label: "Nuxt",
-    top: "41%",
-    left: "64%",
-    tone: "white",
-    motion: "fast",
-    size: "sm",
+    top: "54%",
+    left: "60%",
+    angle: "-26deg",
+    duration: "9.3s",
+    delay: "-5.7s",
+    length: "13rem",
+    hue: 152,
+    size: "0.78rem",
   },
   {
     label: "Sass",
-    top: "35%",
-    left: "66%",
-    tone: "magenta",
-    motion: "slow",
-    size: "sm",
+    top: "68%",
+    left: "48%",
+    angle: "-19deg",
+    duration: "11.9s",
+    delay: "-2.7s",
+    length: "11rem",
+    hue: 328,
+    size: "0.72rem",
   },
   {
-    label: "JSON",
-    top: "27%",
-    left: "50%",
-    tone: "cyan",
-    motion: "medium",
-    size: "sm",
-  },
-  {
-    label: "Linux",
+    label: "PHP",
     top: "24%",
-    left: "61%",
-    tone: "white",
-    motion: "fast",
-    size: "sm",
+    left: "74%",
+    angle: "-35deg",
+    duration: "7.4s",
+    delay: "-6.1s",
+    length: "17rem",
+    hue: 262,
+    size: "0.86rem",
   },
   {
-    label: "Git",
-    top: "21%",
-    left: "52%",
-    tone: "magenta",
-    motion: "slow",
-    size: "sm",
-  },
-  {
-    label: "Rails",
-    top: "30%",
-    left: "45%",
-    tone: "cyan",
-    motion: "medium",
-    size: "sm",
-  },
-  {
-    label: "Astro",
-    top: "36%",
-    left: "43%",
-    tone: "white",
-    motion: "fast",
-    size: "sm",
-  },
-  {
-    label: "C#",
-    top: "42%",
-    left: "41%",
-    tone: "magenta",
-    motion: "slow",
-    size: "sm",
-  },
-  {
-    label: "UI",
-    top: "48%",
-    left: "39%",
-    tone: "cyan",
-    motion: "medium",
-    size: "sm",
-  },
-  {
-    label: "UX",
-    top: "54%",
-    left: "36%",
-    tone: "white",
-    motion: "fast",
-    size: "sm",
-  },
-  {
-    label: "CLI",
-    top: "60%",
-    left: "34%",
-    tone: "magenta",
-    motion: "slow",
-    size: "sm",
-  },
-  {
-    label: "SSR",
-    top: "66%",
-    left: "33%",
-    tone: "cyan",
-    motion: "medium",
-    size: "sm",
-  },
-  {
-    label: "SPA",
-    top: "58%",
-    left: "30%",
-    tone: "white",
-    motion: "fast",
-    size: "sm",
-  },
-  {
-    label: "CMS",
-    top: "48%",
-    left: "29%",
-    tone: "magenta",
-    motion: "slow",
-    size: "sm",
-  },
-  {
-    label: "SEO",
-    top: "39%",
-    left: "31%",
-    tone: "cyan",
-    motion: "medium",
-    size: "sm",
+    label: "Laravel",
+    top: "44%",
+    left: "70%",
+    angle: "-24deg",
+    duration: "10.6s",
+    delay: "-1.5s",
+    length: "15rem",
+    hue: 6,
+    size: "0.8rem",
   },
   {
     label: "Figma",
-    top: "29%",
-    left: "33%",
-    tone: "white",
-    motion: "fast",
-    size: "sm",
+    top: "12%",
+    left: "78%",
+    angle: "-31deg",
+    duration: "8.1s",
+    delay: "-7.2s",
+    length: "14rem",
+    hue: 312,
+    size: "0.82rem",
   },
   {
-    label: "Node.js",
-    top: "23%",
-    left: "39%",
-    tone: "magenta",
-    motion: "slow",
-    size: "md",
-  },
-  {
-    label: "ML",
-    top: "45%",
+    label: "SQL",
+    top: "62%",
     left: "74%",
-    tone: "white",
-    motion: "medium",
-    size: "sm",
+    angle: "-23deg",
+    duration: "13.2s",
+    delay: "-4.9s",
+    length: "12rem",
+    hue: 192,
+    size: "0.74rem",
   },
   {
-    label: "WASM",
-    top: "63%",
-    left: "68%",
-    tone: "cyan",
-    motion: "fast",
-    size: "sm",
+    label: "Astro",
+    top: "80%",
+    left: "62%",
+    angle: "-17deg",
+    duration: "9.6s",
+    delay: "-6.6s",
+    length: "10rem",
+    hue: 40,
+    size: "0.7rem",
   },
   {
     label: "AI",
     top: "72%",
-    left: "55%",
-    tone: "magenta",
-    motion: "slow",
-    size: "sm",
+    left: "82%",
+    angle: "-28deg",
+    duration: "6.6s",
+    delay: "-3.6s",
+    length: "18rem",
+    hue: 272,
+    size: "0.96rem",
   },
-];
+  {
+    label: "API",
+    top: "40%",
+    left: "84%",
+    angle: "-32deg",
+    duration: "7.2s",
+    delay: "-8.1s",
+    length: "16rem",
+    hue: 188,
+    size: "0.84rem",
+  },
+  {
+    label: "CSS",
+    top: "86%",
+    left: "34%",
+    angle: "-15deg",
+    duration: "14.2s",
+    delay: "-5.4s",
+    length: "9rem",
+    hue: 210,
+    size: "0.68rem",
+  },
+] as const;
 
 const pageScatterLanguages = [
   { label: "HTML", top: "4%", left: "10%", tone: "cyan", motion: "slow" },
@@ -497,85 +429,103 @@ const sectionLanguages = {
   ],
 } as const;
 
-function CodeProfilePortrait() {
+function HeroMeteorField() {
   return (
-    <div
-      className="code-profile-shell relative w-full max-w-[34rem] home-reveal"
-      style={{ animationDelay: "0.18s" }}
-      aria-hidden="true"
-    >
-      <div className="code-profile-glow code-profile-glow-cyan" />
-      <div className="code-profile-glow code-profile-glow-magenta" />
-      <div className="code-profile-grid" />
-      <svg
-        className="code-profile-outline"
-        viewBox="0 0 100 100"
-        preserveAspectRatio="none"
-      >
-        <path d="M27 13C20 18 17 29 17 41C17 54 21 67 29 77C35 85 45 91 57 93C65 94 72 92 76 89C71 83 69 77 70 71C77 68 81 63 83 58C78 56 74 54 71 51C78 49 83 46 88 43C81 40 76 37 71 34C73 29 72 23 67 19C61 13 49 11 38 11C34 11 30 12 27 13Z" />
-        <path className="code-profile-detail" d="M57 29C61 27 65 28 67 31" />
-        <path className="code-profile-detail" d="M61 35C64 40 64 45 61 50" />
-        <path className="code-profile-detail" d="M63 49C67 48 70 49 72 51" />
-        <path className="code-profile-detail" d="M64 56C69 56 73 58 75 61" />
-        <path className="code-profile-detail" d="M60 63C65 65 68 68 69 73" />
-      </svg>
-      <svg
-        className="code-profile-outline code-profile-outline-secondary"
-        viewBox="0 0 100 100"
-        preserveAspectRatio="none"
-      >
-        <path d="M66 71C68 78 72 84 79 88" />
-      </svg>
-      <div className="code-profile-signature">
-        <span className="code-profile-signature-label">Synthetic Mood</span>
-        <strong className="code-profile-signature-value">
-          Sharp / Silent / Precise
-        </strong>
-      </div>
-      {heroProfileTokens.map((token, index) => (
-        <span
-          key={`${token.label}-${token.top}-${token.left}`}
-          style={{
-            top: token.top,
-            left: token.left,
-            animationDelay: `${index * -0.22}s`,
-          }}
-          className={[
-            "code-profile-token",
-            token.motion === "slow"
-              ? "floating-slow"
-              : token.motion === "medium"
-                ? "floating-medium"
-                : "floating-fast",
-            token.tone === "cyan"
-              ? "code-profile-token-cyan"
-              : token.tone === "magenta"
-                ? "code-profile-token-magenta"
-                : "code-profile-token-white",
-            token.size === "lg"
-              ? "code-profile-token-lg"
-              : token.size === "md"
-                ? "code-profile-token-md"
-                : "code-profile-token-sm",
-          ].join(" ")}
-        >
-          {token.label}
-        </span>
-      ))}
-      <div className="code-profile-meta">
-        <span>HTML</span>
-        <span>CSS</span>
-        <span>JavaScript</span>
-        <span>TypeScript</span>
-        <span>React</span>
-        <span>Node.js</span>
+    <div className="hero-meteor-shell" aria-hidden="true">
+      <div className="hero-meteor-backdrop" />
+      <div className="hero-meteor-glow hero-meteor-glow-cyan" />
+      <div className="hero-meteor-glow hero-meteor-glow-magenta" />
+      <div className="hero-meteor-glow hero-meteor-glow-white" />
+      <div className="hero-meteor-field">
+        {heroMeteorStreams.map((meteor, index) => (
+          <div
+            key={`${meteor.label}-${index}`}
+            className="hero-language-meteor"
+            style={
+              {
+                top: meteor.top,
+                left: meteor.left,
+                "--meteor-angle": meteor.angle,
+                "--meteor-duration": meteor.duration,
+                "--meteor-delay": meteor.delay,
+                "--meteor-length": meteor.length,
+                "--meteor-hue": `${meteor.hue}`,
+                "--meteor-size": meteor.size,
+                "--meteor-drift-x": `${44 + (index % 5) * 12}vw`,
+                "--meteor-drift-y": `${24 + (index % 6) * 8}vh`,
+                "--meteor-flare": `${0.24 + (index % 5) * 0.08}`,
+              } as CSSProperties
+            }
+          >
+            <span className="hero-language-meteor-tail" />
+            <span className="hero-language-meteor-head" />
+            <span className="hero-language-meteor-label">{meteor.label}</span>
+          </div>
+        ))}
       </div>
     </div>
   );
 }
 
+const decodeGlyphs = [
+  "#",
+  "%",
+  "&",
+  "0",
+  "1",
+  ":",
+  "/",
+  "=",
+  "+",
+  "*",
+  "¦",
+  "░",
+] as const;
+
+function DecodeLine({
+  text,
+  className,
+  startDelay,
+  step = 0.05,
+}: {
+  text: string;
+  className?: string;
+  startDelay: number;
+  step?: number;
+}) {
+  return (
+    <span
+      className={["decode-line", className ?? ""].join(" ").trim()}
+      style={{ "--decode-line-delay": `${startDelay}s` } as CSSProperties}
+    >
+      {Array.from(text).map((character, index) => {
+        const glyph =
+          decodeGlyphs[(text.length + index * 3) % decodeGlyphs.length];
+
+        return (
+          <span
+            key={`${text}-${index}-${character}`}
+            className="decode-char"
+            data-char={character === " " ? "\u00a0" : character}
+            data-scramble={character === " " ? "\u00a0" : glyph}
+            style={
+              {
+                "--decode-delay": `${startDelay + index * step}s`,
+              } as CSSProperties
+            }
+            aria-hidden="true"
+          >
+            {character === " " ? "\u00a0" : character}
+          </span>
+        );
+      })}
+    </span>
+  );
+}
+
 function LanguageScatter({
   items,
+  variant = "section",
 }: {
   items: ReadonlyArray<{
     label: string;
@@ -584,17 +534,35 @@ function LanguageScatter({
     tone: LanguageTone;
     motion: LanguageMotion;
   }>;
+  variant?: "page" | "section";
 }) {
   return (
     <div
-      className="home-language-field pointer-events-none absolute inset-0"
+      className={[
+        "home-language-field pointer-events-none absolute inset-0",
+        variant === "page"
+          ? "home-language-field-page"
+          : "home-language-field-section",
+      ].join(" ")}
       aria-hidden="true"
     >
-      {items.map((item) => (
+      {items.map((item, index) => (
         <div
           key={`${item.label}-${item.top}-${item.left}`}
-          style={{ top: item.top, left: item.left }}
-          className="absolute -translate-x-1/2 -translate-y-1/2"
+          style={
+            {
+              top: item.top,
+              left: item.left,
+              "--scatter-x1": `${((index * 17) % 36) - 18}px`,
+              "--scatter-y1": `${((index * 23) % 42) - 21}px`,
+              "--scatter-x2": `${((index * 29) % 56) - 28}px`,
+              "--scatter-y2": `${((index * 31) % 48) - 24}px`,
+              "--scatter-rotate": `${((index * 7) % 16) - 8}deg`,
+              "--scatter-duration": `${14 + (index % 6) * 2.4}s`,
+              "--scatter-delay": `${index * -1.35}s`,
+            } as CSSProperties
+          }
+          className="home-language-node absolute -translate-x-1/2 -translate-y-1/2"
         >
           <span
             className={[
@@ -608,7 +576,7 @@ function LanguageScatter({
           />
           <span
             className={[
-              'home-language-chip relative z-10 rounded-full px-3.5 py-2 font-["Space_Grotesk"] text-[0.74rem] uppercase tracking-[0.28em] backdrop-blur-xl',
+              'home-language-chip relative z-10 px-3.5 py-2 font-["Space_Grotesk"] text-[0.74rem] uppercase tracking-[0.28em]',
               item.motion === "slow"
                 ? "floating-slow"
                 : item.motion === "medium"
@@ -700,9 +668,10 @@ export function HomePage() {
 
   return (
     <div className="home-page-shell relative overflow-hidden">
-      <LanguageScatter items={pageScatterLanguages} />
+      <LanguageScatter items={pageScatterLanguages} variant="page" />
       <div className="relative z-10">
         <section className="home-hero-stage section-block overflow-hidden pt-20 md:pt-28">
+          <HeroMeteorField />
           <div className="hero-scanline" aria-hidden="true" />
           <div className="hero-stage-nebula galaxy-nebula" aria-hidden="true" />
           <div
@@ -710,7 +679,7 @@ export function HomePage() {
             aria-hidden="true"
           />
           <div className="container-shell relative">
-            <div className="home-hero-layout relative z-10 min-h-[32rem] items-center gap-12 sm:min-h-[38rem] md:min-h-[42rem] lg:grid lg:grid-cols-[minmax(0,0.92fr)_minmax(22rem,0.9fr)] lg:gap-10 xl:grid-cols-[minmax(0,1fr)_minmax(28rem,0.92fr)]">
+            <div className="home-hero-layout relative z-10 min-h-[32rem] items-center gap-12 sm:min-h-[38rem] md:min-h-[42rem]">
               <div className="home-hero-copy relative z-10 flex min-h-[20rem] max-w-3xl flex-col items-center justify-center text-center lg:min-h-[42rem] lg:items-start lg:justify-center lg:text-left">
                 <div
                   className="home-hero-aura home-hero-aura-left"
@@ -729,27 +698,36 @@ export function HomePage() {
                 <h1
                   className="title-display home-reveal max-w-4xl"
                   style={{ animationDelay: "0.16s" }}
+                  aria-label={`${copy.heroTitleTop} ${copy.heroTitleBottom}`}
                 >
-                  <span className="matrix-title-line">
-                    <span className="matrix-title-copy">
-                      {copy.heroTitleTop}
-                    </span>
-                  </span>
+                  <DecodeLine
+                    text={copy.heroTitleTop}
+                    className="matrix-title-line"
+                    startDelay={0.28}
+                    step={0.085}
+                  />
                   <br />
-                  <span className="matrix-title-line matrix-title-line-accent">
-                    <span className="matrix-title-copy">
-                      {copy.heroTitleBottom}
-                    </span>
-                  </span>
+                  <DecodeLine
+                    text={copy.heroTitleBottom}
+                    className="matrix-title-line matrix-title-line-accent"
+                    startDelay={1.38}
+                    step={0.085}
+                  />
                 </h1>
                 <p
                   className="home-reveal mx-auto mt-6 max-w-xl text-xl leading-9 text-white/70 md:text-2xl lg:mx-0"
                   style={{ animationDelay: "0.24s" }}
+                  aria-label={copy.heroLead.split("\n").join(" ")}
                 >
                   {copy.heroLead.split("\n").map((line, index) => (
-                    <span key={line}>
+                    <span key={line} className="block">
                       {index > 0 ? <br /> : null}
-                      {line}
+                      <DecodeLine
+                        text={line}
+                        className="hero-lead-decode"
+                        startDelay={1.68 + index * 0.46}
+                        step={0.05}
+                      />
                     </span>
                   ))}
                 </p>
@@ -764,9 +742,6 @@ export function HomePage() {
                     {copy.priceCta}
                   </Link>
                 </div>
-              </div>
-              <div className="relative z-10 flex justify-center pb-6 lg:justify-end lg:pb-0">
-                <CodeProfilePortrait />
               </div>
             </div>
           </div>
