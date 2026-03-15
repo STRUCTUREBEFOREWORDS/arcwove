@@ -1,4 +1,5 @@
 import { useEffect } from 'react'
+import { useLocation } from 'react-router-dom'
 import type { Locale } from '../data/site'
 
 type SeoOptions = {
@@ -49,14 +50,14 @@ function getSiteUrl() {
   return defaultSiteUrl
 }
 
-function buildCanonicalUrl(siteUrl: string) {
+function buildCanonicalUrl(siteUrl: string, pathname: string, search: string) {
   const url = new URL(siteUrl)
   const basePath = url.pathname.replace(/\/$/, '')
-  const routePath = window.location.pathname === '/' ? '/' : window.location.pathname
+  const routePath = pathname === '/' ? '/' : pathname
 
-  url.pathname = `${basePath}${routePath}`.replace(/\/+/g, '/')
-  url.search = window.location.search
-  url.hash = ''
+  url.pathname = `${basePath}/`.replace(/\/+/g, '/')
+  url.search = ''
+  url.hash = routePath === '/' ? '' : `#${routePath}${search}`
 
   return url.toString()
 }
@@ -73,9 +74,15 @@ function buildOgImageUrl(siteUrl: string) {
 }
 
 export function usePageSeo({ title, description, locale }: SeoOptions) {
+  const location = useLocation()
+
   useEffect(() => {
     const siteUrl = getSiteUrl()
-    const canonicalUrl = buildCanonicalUrl(siteUrl)
+    const canonicalUrl = buildCanonicalUrl(
+      siteUrl,
+      location.pathname,
+      location.search,
+    )
     const ogImageUrl = buildOgImageUrl(siteUrl)
 
     document.title = `${title} | ${siteName}`
@@ -94,5 +101,5 @@ export function usePageSeo({ title, description, locale }: SeoOptions) {
     ensureMeta('twitter:description', 'name').content = description
     ensureMeta('twitter:image', 'name').content = ogImageUrl
     ensureLink('canonical').href = canonicalUrl
-  }, [description, locale, title])
+  }, [description, locale, location.pathname, location.search, title])
 }
