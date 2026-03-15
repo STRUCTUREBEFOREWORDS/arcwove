@@ -613,10 +613,10 @@ export function HomePage() {
       contactCta: "制作相談",
       priceCta: "PRICEを見る",
       processEyebrow: "PROCESS OVERVIEW",
-      processTitle: "制作の流れを可視化し、迷いを減らす。",
+      processTitle: "問い合わせから月額保守まで、契約と決済の流れを見せる。",
       processLink: "詳細を見る",
       priceEyebrow: "PRICE OVERVIEW",
-      priceTitle: "成果へ必要な構造に応じて、3つの設計プランを用意。",
+      priceTitle: "選択肢は2つだけ。初期費用0円か、制作費＋月額保守か。",
       priceLink: "価格詳細へ",
       sampleEyebrow: "SAMPLE",
       sampleTitle: "30サンプルで、構造設計の表現幅を提示する。",
@@ -638,11 +638,12 @@ export function HomePage() {
       contactCta: "Start a project",
       priceCta: "View PRICE",
       processEyebrow: "PROCESS OVERVIEW",
-      processTitle: "Make the production flow visible and remove hesitation.",
+      processTitle:
+        "Show the path from inquiry to monthly maintenance, including contract and payment.",
       processLink: "View details",
       priceEyebrow: "PRICE OVERVIEW",
       priceTitle:
-        "Three design plans matched to the structure required for results.",
+        "Only two options: zero-upfront subscription or production plus monthly maintenance.",
       priceLink: "Pricing details",
       sampleEyebrow: "SAMPLES",
       sampleTitle:
@@ -780,7 +781,7 @@ export function HomePage() {
               </Link>
             </div>
 
-            <div className="relative z-10 grid gap-5 md:grid-cols-2 xl:grid-cols-5">
+            <div className="relative z-10 grid gap-5 md:grid-cols-2 xl:grid-cols-4">
               {processSteps.map((step, index) => (
                 <article
                   key={step.step}
@@ -815,22 +816,62 @@ export function HomePage() {
               </Link>
             </div>
 
-            <div className="relative z-10 grid gap-5 lg:grid-cols-3">
+            <div className="relative z-10 grid gap-5 lg:grid-cols-2">
               {plans.map((plan, index) => (
                 <article
                   key={plan.name}
                   className={[
                     "glass-panel home-panel-reveal rounded-[2rem] p-8",
-                    index === 1 ? "border-cyan-300/40 bg-cyan-300/10" : "",
+                    plan.id === "subscription"
+                      ? "border-cyan-300/40 bg-cyan-300/10"
+                      : "",
                   ].join(" ")}
                   style={{ animationDelay: `${0.1 + index * 0.08}s` }}
                 >
-                  <p className="font-['Space_Grotesk'] text-2xl">{plan.name}</p>
-                  <p className="mt-3 text-4xl font-medium text-white">
-                    {plan.price}
+                  <div className="flex flex-wrap items-center gap-3">
+                    <p className="font-['Space_Grotesk'] text-2xl">
+                      {plan.name}
+                    </p>
+                    <span className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-[0.68rem] uppercase tracking-[0.2em] text-white/55">
+                      {plan.label}
+                    </span>
+                  </div>
+                  <p className="mt-4 text-sm leading-7 text-white/65">
+                    {plan.summary}
                   </p>
-                  <ul className="mt-8 space-y-3 text-sm text-white/70">
-                    {plan.features.map((feature) => (
+                  <div className="mt-6 grid gap-3 sm:grid-cols-2">
+                    <div className="rounded-[1.4rem] border border-white/10 px-4 py-4">
+                      <p className="text-[0.68rem] uppercase tracking-[0.2em] text-white/45">
+                        {locale === "ja" ? "月額" : "Monthly"}
+                      </p>
+                      <p className="mt-2 text-2xl font-medium text-white">
+                        {plan.monthlyFee}
+                      </p>
+                    </div>
+                    <div className="rounded-[1.4rem] border border-white/10 px-4 py-4">
+                      <p className="text-[0.68rem] uppercase tracking-[0.2em] text-white/45">
+                        {locale === "ja"
+                          ? "初期費用 / 制作費"
+                          : "Upfront / Production"}
+                      </p>
+                      <p className="mt-2 text-2xl font-medium text-white">
+                        {plan.setupFee}
+                      </p>
+                    </div>
+                  </div>
+                  <div className="mt-6 rounded-[1.4rem] border border-white/10 px-4 py-4 text-sm text-white/70">
+                    <span className="text-white/45">
+                      {locale === "ja" ? "最低支払総額" : "Minimum total"}
+                    </span>
+                    <p className="mt-2 text-xl font-medium text-white">
+                      {plan.minimumTotal}
+                    </p>
+                    <p className="mt-1 text-xs uppercase tracking-[0.18em] text-cyan-300">
+                      {plan.minimumContract}
+                    </p>
+                  </div>
+                  <ul className="mt-6 space-y-3 text-sm text-white/70">
+                    {plan.features.slice(0, 4).map((feature) => (
                       <li
                         key={feature}
                         className="rounded-2xl border border-white/10 px-4 py-3"

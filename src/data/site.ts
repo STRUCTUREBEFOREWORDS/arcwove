@@ -13,19 +13,40 @@ export type NavItem = {
 };
 
 type PlanDefinition = {
-  name: string;
-  basePriceJpy: number;
+  id: "subscription" | "standard";
+  name: LocalizedText;
+  summary: LocalizedText;
+  label: LocalizedText;
+  setupFeeJpy: number;
+  monthlyFeeJpy: number;
+  minimumContractMonths: number;
   features: LocalizedText[];
 };
 
 export type Plan = {
+  id: PlanDefinition["id"];
   name: string;
-  price: string;
+  summary: string;
+  label: string;
+  setupFee: string;
+  monthlyFee: string;
+  minimumContract: string;
+  minimumTotal: string;
   features: string[];
 };
 
+type PaymentMethodDefinition = {
+  id: "card" | "apple-pay" | "google-pay";
+  label: LocalizedText;
+};
+
+export type PaymentMethod = {
+  id: PaymentMethodDefinition["id"];
+  label: string;
+};
+
 type ProcessStepDefinition = {
-  id: "hearing" | "structure" | "design" | "development" | "launch";
+  id: string;
   step: string;
   title: LocalizedText;
   body: LocalizedText;
@@ -148,102 +169,157 @@ export function getHomeSections(locale: Locale) {
 
 const planDefinitions: PlanDefinition[] = [
   {
-    name: "STRUCTURE",
-    basePriceJpy: 300000,
+    id: "subscription",
+    name: { ja: "Subscription Plan", en: "Subscription Plan" },
+    summary: {
+      ja: "初期費用を抑えて始めたい顧客向けの月額契約です。",
+      en: "A monthly contract for clients who want to launch with no upfront cost.",
+    },
+    label: { ja: "初期費用 0円", en: "Zero upfront cost" },
+    setupFeeJpy: 0,
+    monthlyFeeJpy: 10000,
+    minimumContractMonths: 6,
     features: [
-      { ja: "構造設計", en: "Structure design" },
-      { ja: "最大5ページ", en: "Up to 5 pages" },
-      { ja: "基本導線設計", en: "Core journey design" },
-      { ja: "レスポンシブ対応", en: "Responsive support" },
-      { ja: "更新サポート込み", en: "Includes update support" },
-      { ja: "SEO初期設計込み", en: "Includes initial SEO setup" },
+      { ja: "ウェブサイト制作", en: "Website production" },
+      { ja: "軽微修正", en: "Minor revisions" },
+      { ja: "運用サポート", en: "Operational support" },
+      { ja: "セキュリティ管理", en: "Security management" },
     ],
   },
   {
-    name: "CORE",
-    basePriceJpy: 400000,
+    id: "standard",
+    name: { ja: "Standard Plan", en: "Standard Plan" },
+    summary: {
+      ja: "制作費を支払って始め、その後は月額保守で運用する契約です。",
+      en: "A production fee plus monthly maintenance model for clients who want to pay once to start.",
+    },
+    label: { ja: "制作 + 保守", en: "Production + maintenance" },
+    setupFeeJpy: 50000,
+    monthlyFeeJpy: 10000,
+    minimumContractMonths: 6,
     features: [
-      { ja: "構造設計", en: "Structure design" },
-      { ja: "最大7ページ", en: "Up to 7 pages" },
-      { ja: "価格導線設計", en: "Pricing conversion flow" },
-      { ja: "コンバージョン導線調整", en: "Conversion journey refinement" },
-      { ja: "更新サポート込み", en: "Includes update support" },
-      { ja: "SEO初期設計込み", en: "Includes initial SEO setup" },
-      { ja: "多言語対応込み", en: "Includes multilingual support" },
-      { ja: "アニメーション設計込み", en: "Includes animation direction" },
-    ],
-  },
-  {
-    name: "SIGNATURE",
-    basePriceJpy: 500000,
-    features: [
-      { ja: "構造設計", en: "Structure design" },
-      { ja: "最大8ページ", en: "Up to 8 pages" },
-      { ja: "ブランド再整理", en: "Brand repositioning" },
-      { ja: "CV構造最適化", en: "Conversion architecture optimization" },
-      { ja: "PROCESS体験強化", en: "Enhanced process storytelling" },
-      { ja: "更新サポート込み", en: "Includes update support" },
-      { ja: "SEO初期設計込み", en: "Includes initial SEO setup" },
-      { ja: "多言語対応込み", en: "Includes multilingual support" },
-      { ja: "EC機能込み", en: "Includes e-commerce features" },
-      { ja: "アニメーション設計込み", en: "Includes animation direction" },
-      { ja: "追加1ページ込み", en: "Includes 1 additional page" },
+      { ja: "ウェブサイト制作", en: "Website production" },
+      { ja: "運用管理", en: "Operational management" },
+      { ja: "軽微修正", en: "Minor revisions" },
+      { ja: "セキュリティ管理", en: "Security management" },
     ],
   },
 ];
 
 export function getPlans(locale: Locale, currency: CurrencyCode): Plan[] {
   return planDefinitions.map((plan) => ({
-    name: plan.name,
-    price: formatPrice(plan.basePriceJpy, currency, locale),
+    id: plan.id,
+    name: translateText(plan.name, locale),
+    summary: translateText(plan.summary, locale),
+    label: translateText(plan.label, locale),
+    setupFee: formatPrice(plan.setupFeeJpy, currency, locale),
+    monthlyFee: formatPrice(plan.monthlyFeeJpy, currency, locale),
+    minimumContract:
+      locale === "ja"
+        ? `${plan.minimumContractMonths}ヶ月`
+        : `${plan.minimumContractMonths} months`,
+    minimumTotal: formatPrice(
+      plan.setupFeeJpy + plan.monthlyFeeJpy * plan.minimumContractMonths,
+      currency,
+      locale,
+    ),
     features: plan.features.map((feature) => translateText(feature, locale)),
+  }));
+}
+
+const paymentMethodDefinitions: PaymentMethodDefinition[] = [
+  {
+    id: "card",
+    label: { ja: "クレジットカード", en: "Credit card" },
+  },
+  {
+    id: "apple-pay",
+    label: { ja: "Apple Pay", en: "Apple Pay" },
+  },
+  {
+    id: "google-pay",
+    label: { ja: "Google Pay", en: "Google Pay" },
+  },
+];
+
+export function getPaymentMethods(locale: Locale): PaymentMethod[] {
+  return paymentMethodDefinitions.map((method) => ({
+    id: method.id,
+    label: translateText(method.label, locale),
   }));
 }
 
 const processStepDefinitions: ProcessStepDefinition[] = [
   {
-    id: "hearing",
+    id: "inquiry",
     step: "STEP1",
-    title: { ja: "ヒアリング", en: "Discovery" },
+    title: { ja: "問い合わせ", en: "Inquiry" },
     body: {
-      ja: "事業の目的、伝えたい価値、既存課題を整理し、サイトに必要な役割を言語化します。",
-      en: "We clarify business goals, the value you need to communicate, and current issues to define what role the website must play.",
+      ja: "フォームから相談内容を受け取り、現状と検討段階を確認します。",
+      en: "We receive your inquiry through the form and confirm your current stage and goals.",
     },
   },
   {
-    id: "structure",
+    id: "hearing",
     step: "STEP2",
-    title: { ja: "構造設計", en: "Structure Design" },
+    title: { ja: "ヒアリング", en: "Hearing" },
     body: {
-      ja: "ページの役割分担、導線、情報階層を設計し、成果につながる流れを組み立てます。",
-      en: "We assign page roles, user paths, and information hierarchy to build a flow that supports results.",
+      ja: "事業の目的、訴求したい価値、既存課題を整理し、必要なサイト構造を明確にします。",
+      en: "We organize your goals, value proposition, and current issues to define the structure the site needs.",
     },
   },
   {
-    id: "design",
+    id: "plan",
     step: "STEP3",
-    title: { ja: "デザイン設計", en: "Design Direction" },
+    title: { ja: "プラン選択", en: "Plan Selection" },
     body: {
-      ja: "タイポグラフィ、余白、視線誘導を設計し、構造の強さを見た目へ翻訳します。",
-      en: "Typography, spacing, and visual guidance are shaped to translate the strength of the structure into form.",
+      ja: "サブスクリプション型か制作＋保守型かを選び、契約条件と開始スケジュールを固めます。",
+      en: "We choose either the subscription plan or the production plus maintenance plan and lock the project terms.",
     },
   },
   {
-    id: "development",
+    id: "contract",
     step: "STEP4",
-    title: { ja: "開発", en: "Development" },
+    title: { ja: "契約", en: "Contract" },
     body: {
-      ja: "レスポンシブ、軽量性、動きの質感まで含めてフロントエンドを実装します。",
-      en: "We implement the frontend with responsiveness, performance, and motion quality all considered.",
+      ja: "制作範囲、最低契約期間、保守内容を明文化し、着手条件を双方で確認します。",
+      en: "We document scope, minimum contract term, and maintenance details so both sides are aligned before work begins.",
+    },
+  },
+  {
+    id: "payment",
+    step: "STEP5",
+    title: { ja: "Stripe決済", en: "Stripe Payment" },
+    body: {
+      ja: "クレジットカード、Apple Pay、Google Pay に対応した Stripe 決済で着手金または月額課金を処理します。",
+      en: "Stripe handles the upfront or recurring payment with credit card, Apple Pay, and Google Pay support.",
+    },
+  },
+  {
+    id: "production",
+    step: "STEP6",
+    title: { ja: "制作開始", en: "Production Start" },
+    body: {
+      ja: "構造設計、デザイン、実装を進め、公開前に確認と軽微な調整を行います。",
+      en: "We move through structure, design, and implementation, then review and refine before launch.",
     },
   },
   {
     id: "launch",
-    step: "STEP5",
-    title: { ja: "公開", en: "Launch" },
+    step: "STEP7",
+    title: { ja: "サイト公開", en: "Launch" },
     body: {
-      ja: "公開後の導線確認と改善視点を共有し、運用の基準線を整えます。",
-      en: "After launch, we review journeys and improvement points so operations start from a clear baseline.",
+      ja: "公開作業と初期導線確認を行い、公開直後の不具合や表示差分をチェックします。",
+      en: "We launch the site, validate the initial user flow, and check for post-release issues or rendering differences.",
+    },
+  },
+  {
+    id: "maintenance",
+    step: "STEP8",
+    title: { ja: "月額保守", en: "Monthly Maintenance" },
+    body: {
+      ja: "月額保守で軽微修正、運用サポート、セキュリティ管理を継続し、改善の基盤を維持します。",
+      en: "Monthly maintenance keeps minor revisions, operational support, and security management running as an ongoing baseline.",
     },
   },
 ];
@@ -406,6 +482,11 @@ const contactProjectFieldDefinitions: ContactFormFieldDefinition[] = [
     name: "email",
     type: "email",
     label: { ja: "メールアドレス", en: "Email address" },
+  },
+  {
+    name: "preferred_plan",
+    type: "text",
+    label: { ja: "希望プラン", en: "Preferred plan" },
   },
   { name: "industry", type: "text", label: { ja: "業種", en: "Industry" } },
   {
