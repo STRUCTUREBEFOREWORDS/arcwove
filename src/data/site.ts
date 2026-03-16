@@ -211,7 +211,7 @@ const planDefinitions: PlanDefinition[] = [
         ja: "レスポンシブ対応（スマホ最適化）",
         en: "Responsive support for mobile optimization",
       },
-      { ja: "SEO基本設定", en: "Basic SEO setup" },
+      { ja: "SEO対策", en: "SEO implementation" },
       { ja: "更新（月2回まで）", en: "Content updates up to twice per month" },
       { ja: "セキュリティ管理", en: "Security management" },
       { ja: "メールサポート", en: "Email support" },
@@ -234,7 +234,7 @@ const planDefinitions: PlanDefinition[] = [
         en: "Website production up to 8 pages",
       },
       { ja: "レスポンシブ対応", en: "Responsive support" },
-      { ja: "SEO基本設定", en: "Basic SEO setup" },
+      { ja: "SEO対策", en: "SEO implementation" },
       { ja: "AIチャットボット導入", en: "AI chatbot setup" },
       {
         ja: "更新（月4回まで）",
@@ -265,8 +265,7 @@ const planDefinitions: PlanDefinition[] = [
         en: "Website production up to 12 pages",
       },
       { ja: "レスポンシブ対応", en: "Responsive support" },
-      { ja: "SEO基本設定", en: "Basic SEO setup" },
-      { ja: "SEO簡易分析", en: "Light SEO analysis" },
+      { ja: "SEO対策", en: "SEO implementation" },
       { ja: "キーワード分析", en: "Keyword analysis" },
       { ja: "SEOレポート（月1回）", en: "Monthly SEO report" },
       {
