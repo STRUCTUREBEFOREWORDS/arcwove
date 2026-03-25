@@ -11,6 +11,18 @@ node_modules
 dist-ssr
 *.local
 
+# Backend
+backend/venv/
+backend/__pycache__/
+backend/*.pyc
+backend/.env
+backend/stripe_prices.json
+
+# Misc
+[Content_Types].xml
+*.vsixmanifest
+extension/
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

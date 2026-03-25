@@ -37,7 +37,7 @@ export function AboutPage() {
       ctaButton: "CONTACTへ",
       seoTitle: "ABOUT",
       seoDescription:
-        "STRUCTURE の思想と制作方針を紹介します。構造設計を軸に価値の伝わり方を整える Web 制作会社です。",
+        "arcwove の思想と制作方針を紹介します。構造設計を軸に価値の伝わり方を整える Web 制作会社です。",
     },
     en: {
       eyebrow: "ABOUT",
@@ -73,7 +73,7 @@ export function AboutPage() {
       ctaButton: "Go to Contact",
       seoTitle: "ABOUT",
       seoDescription:
-        "Learn the philosophy behind STRUCTURE, a web studio focused on structure design, information architecture, and conversion-oriented presentation.",
+        "Learn the philosophy behind arcwove, a web studio focused on structure design, information architecture, and conversion-oriented presentation.",
     },
   }[locale];
 

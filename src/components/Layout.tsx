@@ -14,7 +14,7 @@ export function Layout() {
       language: "言語",
       currency: "通貨",
       tagline: "構造から設計する Web制作会社",
-      copyright: "© 2026 STRUCTURE. Meaningful conversion のための構造設計。",
+      copyright: "© 2026 arcwove. Meaningful conversion のための構造設計。",
     },
     en: {
       menu: "MENU",
@@ -22,7 +22,7 @@ export function Layout() {
       currency: "CUR",
       tagline: "A web studio designing from structure.",
       copyright:
-        "© 2026 STRUCTURE. Structure design for meaningful conversion.",
+        "© 2026 arcwove. Structure design for meaningful conversion.",
     },
   }[locale];
 
@@ -39,7 +39,7 @@ export function Layout() {
             to="/"
             className="font-['Space_Grotesk'] text-lg tracking-[0.4em] text-white"
           >
-            STRUCTURE
+            arcwove
           </NavLink>
 
           <nav className="hidden items-center gap-6 md:flex">
@@ -170,7 +170,7 @@ export function Layout() {
         <div className="container-shell flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
           <div>
             <p className="font-['Space_Grotesk'] text-lg tracking-[0.35em]">
-              STRUCTURE
+              arcwove
             </p>
             <p className="mt-2 text-sm text-white/50">{ui.tagline}</p>
           </div>

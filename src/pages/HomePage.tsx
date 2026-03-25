@@ -606,7 +606,7 @@ export function HomePage() {
 
   const copy = {
     ja: {
-      eyebrow: "Structure Driven Creative Studio",
+      eyebrow: "arcwove — Structure-Driven Studio",
       heroTitleTop: "解放せよ",
       heroTitleBottom: "感性と感覚を",
       heroLead: "構造から設計する\nWeb制作会社",
@@ -628,10 +628,10 @@ export function HomePage() {
       ctaButton: "制作相談を始める",
       seoTitle: "HOME",
       seoDescription:
-        "STRUCTURE は構造設計から始める Web制作会社です。多言語対応、SEO 初期設計、多通貨価格表示を備えたサイト制作を行います。",
+        "arcwove は構造設計から始める Web制作会社です。多言語対応、SEO 初期設計、多通貨価格表示を備えたサイト制作を行います。",
     },
     en: {
-      eyebrow: "Structure Driven Creative Studio",
+      eyebrow: "arcwove — Structure-Driven Studio",
       heroTitleTop: "UNLOCK",
       heroTitleBottom: "SENSE AND INSTINCT",
       heroLead: "A web studio\ndesigned from structure",
@@ -656,7 +656,7 @@ export function HomePage() {
       ctaButton: "Begin consultation",
       seoTitle: "HOME",
       seoDescription:
-        "STRUCTURE is a web studio that starts with structure design, multilingual support, initial SEO planning, and multi-currency pricing visibility.",
+        "arcwove is a web studio that starts with structure design, multilingual support, initial SEO planning, and multi-currency pricing visibility.",
     },
   }[locale];
 

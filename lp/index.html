@@ -1,0 +1,772 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>arcwove | 信頼を設計し、行動を生むウェブサイト</title>
+<meta name="description" content="デザインではなく心理構造から設計。視覚・理解・信頼・行動の流れを構築するウェブ制作会社 arcwove。">
+<style>
+/* ── Reset ── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Hiragino Sans', 'Hiragino Kaku Gothic ProN',
+               'Noto Sans JP', 'Yu Gothic', sans-serif;
+  font-size: 16px;
+  line-height: 1.8;
+  color: #111;
+  background: #fff;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── Layout ── */
+.wrap {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+/* ── Nav ── */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  background: rgba(255,255,255,0.95);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid #ebebeb;
+}
+.nav-inner {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 0 24px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.logo {
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: #111;
+  text-decoration: none;
+}
+.nav-cta {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  color: #fff;
+  background: #111;
+  padding: 9px 20px;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  transition: opacity 0.2s;
+}
+.nav-cta:hover { opacity: 0.75; }
+
+/* ── Buttons ── */
+.btn-primary {
+  display: inline-block;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: #fff;
+  background: #111;
+  padding: 16px 36px;
+  border: 2px solid #111;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background 0.2s, color 0.2s;
+  white-space: nowrap;
+}
+.btn-primary:hover { background: #333; }
+
+.btn-outline {
+  display: inline-block;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: #111;
+  background: transparent;
+  padding: 16px 36px;
+  border: 2px solid #111;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background 0.2s, color 0.2s;
+  white-space: nowrap;
+}
+.btn-outline:hover { background: #111; color: #fff; }
+
+/* ── Sections ── */
+section {
+  padding: 100px 0;
+}
+section + section {
+  border-top: 1px solid #ebebeb;
+}
+
+.eyebrow {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  color: #888;
+  text-transform: uppercase;
+  margin-bottom: 24px;
+}
+
+h1 {
+  font-size: clamp(36px, 6vw, 62px);
+  font-weight: 800;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  margin-bottom: 28px;
+}
+
+h2 {
+  font-size: clamp(26px, 4vw, 42px);
+  font-weight: 800;
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+  margin-bottom: 24px;
+}
+
+h3 {
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+
+.lead {
+  font-size: clamp(16px, 2vw, 20px);
+  color: #444;
+  line-height: 1.75;
+  max-width: 600px;
+}
+
+/* ── Hero ── */
+#hero {
+  padding: 160px 0 100px;
+  background: #fff;
+}
+.hero-label {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.24em;
+  color: #888;
+  text-transform: uppercase;
+  margin-bottom: 32px;
+}
+#hero h1 span {
+  display: block;
+  color: #888;
+  font-size: 0.6em;
+  font-weight: 400;
+  letter-spacing: 0;
+  margin-top: 4px;
+}
+.hero-body {
+  font-size: clamp(17px, 2.2vw, 22px);
+  color: #444;
+  line-height: 1.7;
+  max-width: 520px;
+  margin-bottom: 48px;
+}
+.hero-btns {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+/* ── Problem ── */
+#problem { background: #f7f7f7; }
+.problem-list {
+  margin-top: 48px;
+  display: grid;
+  gap: 0;
+  border: 1px solid #ddd;
+}
+.problem-item {
+  padding: 28px 32px;
+  border-bottom: 1px solid #ddd;
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+}
+.problem-item:last-child { border-bottom: none; }
+.problem-num {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  color: #aaa;
+  padding-top: 3px;
+  min-width: 28px;
+}
+.problem-text {
+  font-size: 18px;
+  font-weight: 600;
+  color: #111;
+  line-height: 1.5;
+}
+
+/* ── Solution ── */
+#solution {}
+.solution-flow {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  margin-top: 48px;
+  flex-wrap: wrap;
+}
+.flow-step {
+  flex: 1;
+  min-width: 140px;
+  text-align: center;
+  padding: 28px 16px;
+  border: 1px solid #ddd;
+}
+.flow-arrow {
+  padding: 0 8px;
+  color: #aaa;
+  font-size: 20px;
+  flex-shrink: 0;
+}
+.flow-step-label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  color: #aaa;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+.flow-step-text {
+  font-size: 18px;
+  font-weight: 700;
+  color: #111;
+}
+
+/* ── Plans ── */
+#plans { background: #f7f7f7; }
+.plans-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0;
+  margin-top: 48px;
+  border: 1px solid #ddd;
+}
+.plan-card {
+  padding: 36px 28px;
+  border-right: 1px solid #ddd;
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+}
+.plan-card:last-child { border-right: none; }
+.plan-card.featured {
+  background: #111;
+  color: #fff;
+}
+.plan-badge {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #888;
+  margin-bottom: 8px;
+}
+.plan-card.featured .plan-badge { color: #888; }
+.plan-name {
+  font-size: 20px;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  margin-bottom: 4px;
+}
+.plan-desc {
+  font-size: 13px;
+  color: #666;
+  margin-bottom: 24px;
+  line-height: 1.6;
+}
+.plan-card.featured .plan-desc { color: #aaa; }
+.plan-price {
+  font-size: 34px;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  margin-bottom: 4px;
+}
+.plan-price-note {
+  font-size: 12px;
+  color: #888;
+  margin-bottom: 28px;
+}
+.plan-features {
+  list-style: none;
+  margin-bottom: 32px;
+  flex: 1;
+}
+.plan-features li {
+  font-size: 13px;
+  color: #555;
+  padding: 7px 0;
+  border-bottom: 1px solid #f0f0f0;
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+}
+.plan-card.featured .plan-features li {
+  color: #ccc;
+  border-bottom-color: #333;
+}
+.plan-features li::before {
+  content: '—';
+  color: #bbb;
+  font-size: 12px;
+  flex-shrink: 0;
+  padding-top: 1px;
+}
+.plan-card.featured .plan-features li::before { color: #666; }
+
+.plan-cta {
+  display: block;
+  text-align: center;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  padding: 14px;
+  border: 2px solid #111;
+  background: #111;
+  color: #fff;
+  text-decoration: none;
+  transition: opacity 0.2s;
+}
+.plan-cta:hover { opacity: 0.75; }
+.plan-card.featured .plan-cta {
+  background: #fff;
+  color: #111;
+  border-color: #fff;
+}
+.plan-card.featured .plan-cta:hover { background: #eee; }
+
+/* ── Trust ── */
+#trust {}
+.trust-inner {
+  max-width: 720px;
+}
+blockquote {
+  font-size: clamp(22px, 3.5vw, 36px);
+  font-weight: 800;
+  line-height: 1.45;
+  letter-spacing: -0.01em;
+  color: #111;
+  margin-bottom: 32px;
+}
+blockquote em {
+  font-style: normal;
+  color: #aaa;
+}
+
+/* ── FAQ ── */
+#faq { background: #f7f7f7; }
+.faq-list {
+  margin-top: 48px;
+  border: 1px solid #ddd;
+}
+.faq-item {
+  border-bottom: 1px solid #ddd;
+}
+.faq-item:last-child { border-bottom: none; }
+.faq-q {
+  width: 100%;
+  background: none;
+  border: none;
+  text-align: left;
+  padding: 24px 32px;
+  font-size: 16px;
+  font-weight: 700;
+  color: #111;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  font-family: inherit;
+  line-height: 1.5;
+}
+.faq-q:hover { background: #f0f0f0; }
+.faq-icon {
+  font-size: 20px;
+  font-weight: 300;
+  color: #888;
+  flex-shrink: 0;
+  transition: transform 0.25s;
+  line-height: 1;
+}
+.faq-item.open .faq-icon { transform: rotate(45deg); }
+.faq-a {
+  display: none;
+  padding: 0 32px 24px;
+  font-size: 15px;
+  color: #555;
+  line-height: 1.8;
+  max-width: 680px;
+}
+.faq-item.open .faq-a { display: block; }
+
+/* ── Final CTA ── */
+#contact {
+  background: #111;
+  color: #fff;
+  text-align: center;
+  padding: 120px 24px;
+  border-top: none;
+}
+#contact h2 {
+  color: #fff;
+  max-width: 600px;
+  margin: 0 auto 20px;
+}
+#contact .cta-sub {
+  color: #666;
+  font-size: 16px;
+  max-width: 440px;
+  margin: 0 auto 48px;
+  line-height: 1.75;
+}
+#contact .btn-primary {
+  background: #fff;
+  color: #111;
+  border-color: #fff;
+  font-size: 15px;
+  padding: 18px 52px;
+}
+#contact .btn-primary:hover { background: #e8e8e8; }
+
+/* ── Section CTA ── */
+.section-cta {
+  margin-top: 48px;
+}
+
+/* ── Footer ── */
+footer {
+  padding: 32px 24px;
+  border-top: 1px solid #ebebeb;
+  text-align: center;
+  font-size: 12px;
+  color: #aaa;
+  letter-spacing: 0.06em;
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  section { padding: 72px 0; }
+  #hero { padding: 120px 0 72px; }
+
+  .plans-grid {
+    grid-template-columns: 1fr;
+  }
+  .plan-card {
+    border-right: none;
+    border-bottom: 1px solid #ddd;
+  }
+  .plan-card:last-child { border-bottom: none; }
+
+  .solution-flow {
+    flex-direction: column;
+    gap: 0;
+  }
+  .flow-step { width: 100%; min-width: unset; }
+  .flow-arrow {
+    transform: rotate(90deg);
+    padding: 8px 0;
+  }
+
+  .hero-btns { flex-direction: column; }
+  .btn-primary, .btn-outline { text-align: center; }
+
+  .faq-q { padding: 20px 20px; }
+  .faq-a { padding: 0 20px 20px; }
+  .problem-item { padding: 20px 20px; }
+}
+</style>
+</head>
+<body>
+
+<!-- Nav -->
+<nav>
+  <div class="nav-inner">
+    <a href="#" class="logo">arcwove</a>
+    <a href="#contact" class="nav-cta" id="nav-cta-scroll">無料相談する</a>
+  </div>
+</nav>
+
+<!-- ① Hero -->
+<section id="hero">
+  <div class="wrap">
+    <p class="hero-label">arcwove — Structure-Driven Web Studio</p>
+    <h1>ただ作るだけのサイトは、<br>もう終わり。</h1>
+    <p class="hero-body">
+      信頼を設計し、行動を生むウェブサイトを構築します。<br>
+      デザインではなく、心理構造から考える制作会社です。
+    </p>
+    <div class="hero-btns">
+      <a href="#" class="btn-primary" data-cta="">無料相談する</a>
+      <a href="#plans" class="btn-outline" id="scroll-plans">プランを見る</a>
+    </div>
+  </div>
+</section>
+
+<!-- ② Problem -->
+<section id="problem">
+  <div class="wrap">
+    <p class="eyebrow">The Problem</p>
+    <h2>こんな悩みはありませんか。</h2>
+
+    <div class="problem-list">
+      <div class="problem-item">
+        <span class="problem-num">01</span>
+        <span class="problem-text">サイトを作ったのに、問い合わせが来ない</span>
+      </div>
+      <div class="problem-item">
+        <span class="problem-num">02</span>
+        <span class="problem-text">何を改善すればいいか、誰に聞けばいいかわからない</span>
+      </div>
+      <div class="problem-item">
+        <span class="problem-num">03</span>
+        <span class="problem-text">制作会社に頼んだが、成果につながっていない</span>
+      </div>
+    </div>
+
+    <div class="section-cta">
+      <a href="#" class="btn-primary" data-cta="">無料相談する</a>
+    </div>
+  </div>
+</section>
+
+<!-- ③ Solution -->
+<section id="solution">
+  <div class="wrap">
+    <p class="eyebrow">Our Approach</p>
+    <h2>私たちは<br>"信頼を設計"します。</h2>
+    <p class="lead">
+      デザインではなく、ユーザーの心理構造から設計します。<br>
+      訪問者が自然に理解し、信頼し、行動する。<br>
+      その流れを、構造として構築します。
+    </p>
+
+    <div class="solution-flow">
+      <div class="flow-step">
+        <p class="flow-step-label">Step 01</p>
+        <p class="flow-step-text">視覚</p>
+      </div>
+      <span class="flow-arrow">→</span>
+      <div class="flow-step">
+        <p class="flow-step-label">Step 02</p>
+        <p class="flow-step-text">理解</p>
+      </div>
+      <span class="flow-arrow">→</span>
+      <div class="flow-step">
+        <p class="flow-step-label">Step 03</p>
+        <p class="flow-step-text">信頼</p>
+      </div>
+      <span class="flow-arrow">→</span>
+      <div class="flow-step">
+        <p class="flow-step-label">Step 04</p>
+        <p class="flow-step-text">行動</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ④ Plans -->
+<section id="plans">
+  <div class="wrap">
+    <p class="eyebrow">Pricing</p>
+    <h2>目的に合わせた<br>3つのプラン。</h2>
+    <p class="lead">機能数ではなく、役割で選べる構成です。</p>
+
+    <div class="plans-grid">
+      <!-- Launch -->
+      <div class="plan-card">
+        <p class="plan-badge">Launch</p>
+        <p class="plan-name">Starter</p>
+        <p class="plan-desc">信頼構築。まず公開し、正しい起点を作る。</p>
+        <p class="plan-price">¥10,000</p>
+        <p class="plan-price-note">/ 月（最低6ヶ月）</p>
+        <ul class="plan-features">
+          <li>最大5ページ制作</li>
+          <li>レスポンシブ対応</li>
+          <li>SEO対策</li>
+          <li>更新（月4回まで）</li>
+          <li>メールサポート</li>
+        </ul>
+        <a href="#" class="plan-cta" data-cta="starter">このプランで相談する</a>
+      </div>
+
+      <!-- Business -->
+      <div class="plan-card featured">
+        <p class="plan-badge">Most Popular</p>
+        <p class="plan-name">Standard</p>
+        <p class="plan-desc">CV最適化。設計と運用のバランスを整える。</p>
+        <p class="plan-price">¥15,000</p>
+        <p class="plan-price-note">/ 月（最低6ヶ月）</p>
+        <ul class="plan-features">
+          <li>最大8ページ制作</li>
+          <li>レスポンシブ対応</li>
+          <li>SEO対策</li>
+          <li>AIチャットボット</li>
+          <li>Google Analytics 導入</li>
+          <li>更新（月4回まで）</li>
+          <li>運用管理 + メールサポート</li>
+        </ul>
+        <a href="#" class="plan-cta" data-cta="standard">このプランで相談する</a>
+      </div>
+
+      <!-- Growth -->
+      <div class="plan-card">
+        <p class="plan-badge">Growth</p>
+        <p class="plan-name">Growth</p>
+        <p class="plan-desc">集客成長。SEOと改善を回し続ける構成。</p>
+        <p class="plan-price">¥20,000</p>
+        <p class="plan-price-note">/ 月（最低6ヶ月）</p>
+        <ul class="plan-features">
+          <li>最大12ページ制作</li>
+          <li>レスポンシブ対応</li>
+          <li>SEO対策 + キーワード分析</li>
+          <li>月次SEOレポート</li>
+          <li>更新（月4回まで）</li>
+          <li>月次サイトチェック</li>
+          <li>優先サポート</li>
+        </ul>
+        <a href="#" class="plan-cta" data-cta="growth">このプランで相談する</a>
+      </div>
+    </div>
+
+    <div class="section-cta">
+      <a href="#" class="btn-primary" data-cta="">無料相談する</a>
+    </div>
+  </div>
+</section>
+
+<!-- ⑤ Trust -->
+<section id="trust">
+  <div class="wrap">
+    <div class="trust-inner">
+      <p class="eyebrow">Our Philosophy</p>
+      <blockquote>
+        制作とは、<em>見た目を整えることではない。</em><br>
+        信頼を設計し、<br>行動を生むこと。
+      </blockquote>
+      <p class="lead">
+        私たちが向き合うのは、あなたのビジネスです。<br>
+        どんな価値を、誰に、どう伝えるか。<br>
+        その答えを構造に変えることが、私たちの仕事です。
+      </p>
+      <div class="section-cta">
+        <a href="#" class="btn-primary" data-cta="">無料相談する</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ⑦ FAQ -->
+<section id="faq">
+  <div class="wrap">
+    <p class="eyebrow">FAQ</p>
+    <h2>よくある質問。</h2>
+
+    <div class="faq-list">
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">
+          どれくらいで完成しますか？
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-a">
+          カウンセリングシート提出後、通常3〜6週間で初稿をお届けします。ページ数や素材の準備状況によって変わりますが、事前にスケジュールを共有しながら進めます。
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">
+          更新はどこまで対応してもらえますか？
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-a">
+          テキスト変更・画像差し替えなどの軽微な更新を月4回まで対応します（全プラン共通）。ページ追加や機能追加は別途ご相談ください。
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">
+          途中解約は可能ですか？
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-a">
+          最低契約期間（6ヶ月）終了後は、1ヶ月前のご通知にて解約可能です。最低期間中の途中解約については、残期間分の費用が発生する場合があります。詳しくはご契約時にご説明します。
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ⑧ Final CTA -->
+<section id="contact">
+  <p class="eyebrow" style="color:#555;">Free Consultation</p>
+  <h2>迷っているなら、<br>まずは相談してください。</h2>
+  <p class="cta-sub">
+    費用・スケジュール・構成のどんなことでも。<br>
+    30分の無料相談から始められます。
+  </p>
+  <a href="#" class="btn-primary" data-cta="">無料相談する</a>
+</section>
+
+<!-- Footer -->
+<footer>
+  <p>© 2026 arcwove. All rights reserved.</p>
+</footer>
+
+<script>
+// ══════════════════════════════════════════════
+// ★ 本番デプロイ時は以下のURLを変更してください ★
+// 開発: http://localhost:5173/arcwove
+// 本番: https://arcwove.com
+// ══════════════════════════════════════════════
+var SITE_URL = 'http://localhost:5173/arcwove';
+
+// ── 全CTAリンクにURLを設定 ──
+document.querySelectorAll('[data-cta]').forEach(function(el) {
+  var plan = el.getAttribute('data-cta');
+  el.href = plan
+    ? SITE_URL + '/counseling?plan=' + plan
+    : SITE_URL + '/counseling';
+});
+
+// ── プランへのスムーズスクロール ──
+document.getElementById('scroll-plans').addEventListener('click', function(e) {
+  e.preventDefault();
+  document.getElementById('plans').scrollIntoView({ behavior: 'smooth' });
+});
+
+// ── FAQ アコーディオン ──
+document.querySelectorAll('.faq-q').forEach(function(btn) {
+  btn.addEventListener('click', function() {
+    var item = this.closest('.faq-item');
+    var isOpen = item.classList.contains('open');
+
+    document.querySelectorAll('.faq-item').forEach(function(el) {
+      el.classList.remove('open');
+      el.querySelector('.faq-q').setAttribute('aria-expanded', 'false');
+    });
+
+    if (!isOpen) {
+      item.classList.add('open');
+      this.setAttribute('aria-expanded', 'true');
+    }
+  });
+});
+
+// ── ナビのCTAスクロール ──
+document.getElementById('nav-cta-scroll').addEventListener('click', function(e) {
+  e.preventDefault();
+  document.getElementById('contact').scrollIntoView({ behavior: 'smooth' });
+});
+</script>
+</body>
+</html>

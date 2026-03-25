@@ -1,13 +1,63 @@
+import { useState } from 'react'
 import { Link, useSearchParams } from 'react-router-dom'
 import { getPlans, getPricingNotes } from "../data/site";
 import { useSitePreferences } from "../context/SitePreferences";
 import { usePageSeo } from "../hooks/usePageSeo";
 
+const API_URL = import.meta.env.VITE_API_URL ?? "";
+
 export function PricePage() {
   const { locale, currency } = useSitePreferences();
   const [searchParams] = useSearchParams();
+  const [clientType, setClientType] = useState<"individual" | "corporate">("individual");
+  const [checkoutLoading, setCheckoutLoading] = useState<string | null>(null);
   const plans = getPlans(locale, currency);
   const pricingNotes = getPricingNotes(locale);
+
+  async function handleCheckout(planId: string) {
+    if (checkoutLoading) return;
+    setCheckoutLoading(planId);
+    try {
+      const resp = await fetch(`${API_URL}/api/checkout/session`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          plan_id: planId,
+          currency,
+          locale,
+          client_type: clientType,
+        }),
+      });
+      if (!resp.ok) throw new Error();
+      const data = await resp.json();
+      if (!data.url) throw new Error("No checkout URL received");
+      window.location.href = data.url;
+    } catch {
+      alert(
+        locale === "ja"
+          ? "決済ページへの遷移に失敗しました。もう一度お試しください。"
+          : "Failed to redirect to checkout. Please try again."
+      );
+      setCheckoutLoading(null);
+    }
+  }
+
+  const checkoutCopy = {
+    ja: {
+      individual: "個人",
+      corporate:  "法人",
+      clientLabel: "申込区分",
+      ctaCheckout: "このプランで申し込む",
+      ctaLoading:  "遷移中...",
+    },
+    en: {
+      individual: "Individual",
+      corporate:  "Corporate",
+      clientLabel: "Client type",
+      ctaCheckout: "Get started",
+      ctaLoading:  "Redirecting...",
+    },
+  }[locale];
   const selectedPlanId = searchParams.get("recommended");
   const selectedStage = searchParams.get("stage");
   const selectedSupport = searchParams.get("support");
@@ -45,7 +95,7 @@ export function PricePage() {
       ctaButton: "相談する",
       seoTitle: "PRICE",
       seoDescription:
-        "STRUCTURE の Starter、Standard、Growth の3つの料金プランを確認できます。",
+        "arcwove の Starter、Standard、Growth の3つの料金プランを確認できます。",
     },
     en: {
       eyebrow: "PRICE",
@@ -79,7 +129,7 @@ export function PricePage() {
       ctaButton: "Talk to us",
       seoTitle: "PRICE",
       seoDescription:
-        "Compare STRUCTURE's Starter, Standard, and Growth website plans.",
+        "Compare arcwove's Starter, Standard, and Growth website plans.",
     },
   }[locale];
 
@@ -321,7 +371,30 @@ export function PricePage() {
           </div>
         </div>
 
-        <div className="mt-14 grid gap-6 xl:grid-cols-3">
+        {/* Client type toggle */}
+        <div className="mt-10 flex items-center gap-4">
+          <span className="text-xs uppercase tracking-[0.22em] text-white/45">
+            {checkoutCopy.clientLabel}
+          </span>
+          <div className="flex rounded-full border border-white/10 bg-white/5 p-1">
+            {(["individual", "corporate"] as const).map((type) => (
+              <button
+                key={type}
+                onClick={() => setClientType(type)}
+                className={[
+                  "rounded-full px-5 py-2 text-xs uppercase tracking-[0.18em] transition",
+                  clientType === type
+                    ? "bg-white/15 text-white"
+                    : "text-white/45 hover:text-white/70",
+                ].join(" ")}
+              >
+                {checkoutCopy[type]}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        <div className="mt-8 grid gap-6 xl:grid-cols-3">
           {plans.map((plan) => (
             <article
               key={plan.name}
@@ -388,15 +461,24 @@ export function PricePage() {
                   </div>
                 ))}
               </div>
-              <div className="mt-6">
-                <Link
-                  to={`/contact?recommended=${plan.id}`}
+              <div className="mt-6 flex flex-col gap-3 sm:flex-row">
+                <button
+                  onClick={() => handleCheckout(plan.id)}
+                  disabled={checkoutLoading === plan.id}
                   className={[
                     "inline-flex w-full items-center justify-center rounded-full px-5 py-3 text-sm tracking-[0.14em] transition sm:w-fit",
                     selectedPlanId === plan.id
-                      ? "border border-emerald-300/40 bg-emerald-300/90 text-black shadow-[0_0_30px_rgba(52,211,153,0.24)] hover:-translate-y-1"
-                      : "border border-white/10 bg-white/5 text-white/75 hover:border-white/25 hover:text-white hover:-translate-y-1",
+                      ? "border border-emerald-300/40 bg-emerald-300/90 text-black shadow-[0_0_30px_rgba(52,211,153,0.24)] hover:-translate-y-1 disabled:opacity-60"
+                      : "primary-button disabled:opacity-60",
                   ].join(" ")}
+                >
+                  {checkoutLoading === plan.id
+                    ? checkoutCopy.ctaLoading
+                    : checkoutCopy.ctaCheckout}
+                </button>
+                <Link
+                  to={`/contact?recommended=${plan.id}`}
+                  className="inline-flex w-full items-center justify-center rounded-full border border-white/10 bg-white/5 px-5 py-3 text-sm tracking-[0.14em] text-white/60 transition hover:border-white/20 hover:text-white/80 hover:-translate-y-1 sm:w-fit"
                 >
                   {copy.ctaButton}
                 </Link>

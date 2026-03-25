@@ -43,10 +43,10 @@ export function ContactPage() {
       sending: "送信中...",
       seoTitle: "CONTACT",
       seoDescription:
-        "STRUCTURE へのお問い合わせと制作相談フォームです。一般問い合わせと制作依頼を切り替えて送信できます。",
+        "arcwove へのお問い合わせと制作相談フォームです。一般問い合わせと制作依頼を切り替えて送信できます。",
       subject: {
-        inquiry: "STRUCTURE お問い合わせ",
-        project: "STRUCTURE 制作依頼",
+        inquiry: "arcwove お問い合わせ",
+        project: "arcwove 制作依頼",
       },
       status: {
         success: "送信を受け付けました。折り返し連絡します。",
@@ -79,10 +79,10 @@ export function ContactPage() {
       sending: "Sending...",
       seoTitle: "CONTACT",
       seoDescription:
-        "Contact STRUCTURE for general inquiries or structured website production requests through multilingual intake forms.",
+        "Contact arcwove for general inquiries or structured website production requests through multilingual intake forms.",
       subject: {
-        inquiry: "STRUCTURE Inquiry",
-        project: "STRUCTURE Project Request",
+        inquiry: "arcwove Inquiry",
+        project: "arcwove Project Request",
       },
       status: {
         success:

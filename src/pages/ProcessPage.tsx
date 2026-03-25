@@ -66,7 +66,7 @@ export function ProcessPage() {
       paymentBody: "契約後の決済は Stripe で処理し、クレジットカード、Apple Pay、Google Pay に対応します。",
       seoTitle: "PROCESS",
       seoDescription:
-        "STRUCTURE の契約から制作、Stripe 決済、公開後の月額保守までの流れを確認できます。",
+        "arcwove の契約から制作、Stripe 決済、公開後の月額保守までの流れを確認できます。",
     },
     en: {
       eyebrow: "PROCESS",
@@ -77,7 +77,7 @@ export function ProcessPage() {
       paymentBody: "After the contract, Stripe handles billing with credit card, Apple Pay, and Google Pay support.",
       seoTitle: "PROCESS",
       seoDescription:
-        "Review the STRUCTURE flow from inquiry and contract through Stripe payment, launch, and monthly maintenance.",
+        "Review the arcwove flow from inquiry and contract through Stripe payment, launch, and monthly maintenance.",
     },
   }[locale];
 

@@ -24,7 +24,7 @@ export function SamplePage() {
       close: "CLOSE",
       seoTitle: "SAMPLE",
       seoDescription:
-        "STRUCTURE の Web サイトサンプルをカテゴリ別に確認できます。企業サイト、LP、EC など多様な構造設計例を掲載しています。",
+        "arcwove の Web サイトサンプルをカテゴリ別に確認できます。企業サイト、LP、EC など多様な構造設計例を掲載しています。",
     },
     en: {
       eyebrow: "SAMPLES",
@@ -34,7 +34,7 @@ export function SamplePage() {
       close: "CLOSE",
       seoTitle: "SAMPLES",
       seoDescription:
-        "Browse STRUCTURE website samples by category, including corporate, landing page, ecommerce, minimal, and experimental design structures.",
+        "Browse arcwove website samples by category, including corporate, landing page, ecommerce, minimal, and experimental design structures.",
     },
   }[locale];
 

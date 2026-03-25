@@ -12,21 +12,21 @@ const SitePreferencesContext = createContext<SitePreferencesContextValue | null>
 
 export function SitePreferencesProvider({ children }: { children: ReactNode }) {
   const [locale, setLocale] = useState<Locale>(() => {
-    const saved = localStorage.getItem('structure-locale')
+    const saved = localStorage.getItem('arcwove-locale')
     return saved === 'en' ? 'en' : 'ja'
   })
   const [currency, setCurrency] = useState<CurrencyCode>(() => {
-    const saved = localStorage.getItem('structure-currency')
+    const saved = localStorage.getItem('arcwove-currency')
     return saved === 'USD' || saved === 'EUR' ? saved : 'JPY'
   })
 
   useEffect(() => {
-    localStorage.setItem('structure-locale', locale)
+    localStorage.setItem('arcwove-locale', locale)
     document.documentElement.lang = locale
   }, [locale])
 
   useEffect(() => {
-    localStorage.setItem('structure-currency', currency)
+    localStorage.setItem('arcwove-currency', currency)
   }, [currency])
 
   const value = useMemo(

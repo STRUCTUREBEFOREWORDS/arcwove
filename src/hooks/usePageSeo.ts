@@ -8,7 +8,7 @@ type SeoOptions = {
   locale: Locale
 }
 
-const siteName = 'STRUCTURE'
+const siteName = 'arcwove'
 const defaultSiteUrl = 'https://structurebeforewords.github.io/VELIRO'
 
 function ensureMeta(name: string, attribute: 'name' | 'property') {
