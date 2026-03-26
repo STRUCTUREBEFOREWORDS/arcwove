@@ -36,7 +36,7 @@ export function Layout() {
       <header className="fixed inset-x-0 top-0 z-50 border-b border-white/10 bg-black/20 backdrop-blur-xl">
         <div className="container-shell flex items-center justify-between py-5">
           <NavLink to="/" aria-label="arcwove">
-            <img src="/logo.svg" alt="arcwove" className="h-8 w-auto" />
+            <img src="/logo.svg" alt="arcwove" className="h-8 w-auto brightness-0 invert" />
           </NavLink>
 
           <nav className="hidden items-center gap-6 md:flex">
@@ -166,7 +166,7 @@ export function Layout() {
       <footer className="relative z-10 border-t border-white/10 py-10">
         <div className="container-shell flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
           <div>
-            <img src="/logo.svg" alt="arcwove" className="h-7 w-auto" />
+            <img src="/logo.svg" alt="arcwove" className="h-7 w-auto brightness-0 invert" />
             <p className="mt-2 text-sm text-white/50">{ui.tagline}</p>
           </div>
           <p className="text-sm text-white/40">{ui.copyright}</p>
