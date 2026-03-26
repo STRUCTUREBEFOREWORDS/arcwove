@@ -35,11 +35,8 @@ export function Layout() {
     <div className="page-shell">
       <header className="fixed inset-x-0 top-0 z-50 border-b border-white/10 bg-black/20 backdrop-blur-xl">
         <div className="container-shell flex items-center justify-between py-5">
-          <NavLink
-            to="/"
-            className="font-['Space_Grotesk'] text-lg tracking-[0.4em] text-white"
-          >
-            arcwove
+          <NavLink to="/" aria-label="arcwove">
+            <img src="/logo.svg" alt="arcwove" className="h-8 w-auto" />
           </NavLink>
 
           <nav className="hidden items-center gap-6 md:flex">
@@ -169,9 +166,7 @@ export function Layout() {
       <footer className="relative z-10 border-t border-white/10 py-10">
         <div className="container-shell flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
           <div>
-            <p className="font-['Space_Grotesk'] text-lg tracking-[0.35em]">
-              arcwove
-            </p>
+            <img src="/logo.svg" alt="arcwove" className="h-7 w-auto" />
             <p className="mt-2 text-sm text-white/50">{ui.tagline}</p>
           </div>
           <p className="text-sm text-white/40">{ui.copyright}</p>

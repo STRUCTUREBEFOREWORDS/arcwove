@@ -131,6 +131,13 @@ nav.scrolled {
   letter-spacing: 0.08em;
   color: var(--text);
   text-decoration: none;
+  display: flex;
+  align-items: center;
+}
+.logo img {
+  height: 32px;
+  width: auto;
+  display: block;
 }
 
 /* ═══════════════════
@@ -634,9 +641,16 @@ footer {
   font-size: 16px;
   font-weight: 600;
   letter-spacing: 0.08em;
+  display: flex;
+  align-items: center;
   color: var(--text-sub);
   text-decoration: none;
   transition: color 0.2s;
+}
+.footer-logo img {
+  height: 28px;
+  width: auto;
+  display: block;
 }
 .footer-logo:hover { color: var(--text); }
 
