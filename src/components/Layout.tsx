@@ -169,7 +169,15 @@ export function Layout() {
             <img src="/logo.svg" alt="arcwove" className="h-7 w-auto brightness-0 invert" />
             <p className="mt-2 text-sm text-white/50">{ui.tagline}</p>
           </div>
-          <p className="text-sm text-white/40">{ui.copyright}</p>
+          <div className="flex flex-col items-end gap-2">
+            <a
+              href="/legal.html"
+              className="text-xs tracking-[0.1em] text-white/30 transition hover:text-white/60"
+            >
+              {locale === "ja" ? "特定商取引法に基づく表記" : "Legal Disclosure"}
+            </a>
+            <p className="text-sm text-white/40">{ui.copyright}</p>
+          </div>
         </div>
       </footer>
     </div>
