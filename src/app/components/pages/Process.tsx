@@ -332,7 +332,7 @@ const DesignLine = ({ scrollProgress, step, i }: { scrollProgress: any; step: an
 // Sub-component: one line in CodeLinesBackground
 const CodeLine = ({ scrollProgress, range, i }: { scrollProgress: any; range: number[]; i: number }) => {
   const top = useTransform(scrollProgress, [range[0], range[1]], [`${-10 + i * 8}%`, `${100 + i * 8}%`]);
-  const opacity = useTransform(scrollProgress, [range[0], range[0] + 0.1, range[1] - 0.1, range[1]], [0, 0.3, 0.3, 0]);
+  const opacity = useTransform(scrollProgress, [range[0], range[0] + 0.04, range[1] - 0.04, range[1]], [0, 0.3, 0.3, 0]);
   const { left, width } = CODE_LINE_POSITIONS[i];
   return (
     <motion.div
