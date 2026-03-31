@@ -1,15 +1,22 @@
-
-  <!DOCTYPE html>
-  <html lang="en">
-    <head>
-      <meta charset="UTF-8" />
-      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-      <title>arcwove</title>
-    </head>
-
-    <body>
-      <div id="root"></div>
-      <script type="module" src="/src/main.tsx"></script>
-    </body>
-  </html>
-  
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>arcwove</title>
+    <script>
+      // GitHub Pages SPA redirect handler (BrowserRouter)
+      (function () {
+        var p = new URLSearchParams(window.location.search).get('p');
+        if (!p) return;
+        var q = new URLSearchParams(window.location.search).get('q');
+        var url = '/' + decodeURIComponent(p) + (q ? '?' + decodeURIComponent(q) : '') + window.location.hash;
+        window.history.replaceState(null, '', url);
+      })();
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
