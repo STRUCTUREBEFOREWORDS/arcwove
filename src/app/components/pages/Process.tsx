@@ -46,7 +46,6 @@ const STEPS = [
 
 const easing = [0.22, 1, 0.36, 1] as [number, number, number, number];
 
-// Pre-computed random values (stable across renders — must not be inside component)
 const CODE_LINE_POSITIONS = [...Array(12)].map(() => ({
   left: Math.random() * 30 + 10,
   width: Math.random() * 40 + 20,
@@ -82,16 +81,19 @@ export const Process = () => {
 
       <ProgressIndicator scrollProgress={scrollYProgress} />
 
+      {/* イントロ */}
       <Section className="sticky top-0 h-screen flex items-center justify-center border-b-0 py-0 z-20">
         <Layout>
           <motion.div
-            className="col-span-8 text-center"
+            className="col-span-8 text-center px-2"
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.9, ease: easing }}
           >
-            <h1 className="text-5xl sm:text-6xl md:text-7xl tracking-[0.5em] uppercase mb-8">Process</h1>
-            <p className="text-sm sm:text-base font-light text-white/40 tracking-[0.3em]">
+            <h1 className="text-4xl sm:text-6xl md:text-7xl tracking-[0.15em] sm:tracking-[0.35em] md:tracking-[0.5em] uppercase mb-6 md:mb-8">
+              Process
+            </h1>
+            <p className="text-xs sm:text-sm md:text-base font-light text-white/40 tracking-[0.2em] md:tracking-[0.3em]">
               思想が形になるまでの厳格なプロセス。
             </p>
           </motion.div>
@@ -107,6 +109,13 @@ export const Process = () => {
   );
 };
 
+// ── ステップラベル ──────────────────────────────────────────────────────────
+const StepLabel = ({ id }: { id: string }) => (
+  <div className="text-[9px] sm:text-[10px] tracking-[0.6em] sm:tracking-[0.8em] text-white/20 uppercase mb-4 md:mb-6">
+    Step {id}
+  </div>
+);
+
 // STEP 01 DISCOVERY
 const StepDiscovery = ({ scrollProgress, step }: any) => {
   const opacity = useTransform(scrollProgress, [step.range[0], step.range[0] + 0.05, step.range[1] - 0.05, step.range[1]], [0, 1, 1, 0]);
@@ -114,28 +123,29 @@ const StepDiscovery = ({ scrollProgress, step }: any) => {
   const y2 = useTransform(scrollProgress, [step.range[0] + 0.02, step.range[0] + 0.1], [80, 0]);
 
   return (
-    <motion.div className="sticky top-0 h-screen flex items-center" style={{ opacity }}>
+    <motion.div className="sticky top-0 h-screen flex items-center z-20" style={{ opacity }}>
       <Layout>
-        <motion.div className="col-span-4" style={{ y }}>
-          <div className="text-[10px] tracking-[0.8em] text-white/20 uppercase mb-6">
-            Step {step.id}
-          </div>
-          <h2 className="text-3xl sm:text-4xl md:text-5xl tracking-[0.4em] uppercase mb-8">{step.title}</h2>
-          <p className="text-sm sm:text-base font-light text-white/50 tracking-[0.2em] leading-relaxed">
+        {/* モバイル: 縦積み / デスクトップ: 横2カラム */}
+        <motion.div className="col-span-8 md:col-span-4 mb-8 md:mb-0" style={{ y }}>
+          <StepLabel id={step.id} />
+          <h2 className="text-3xl sm:text-4xl md:text-5xl tracking-[0.1em] sm:tracking-[0.25em] md:tracking-[0.4em] uppercase mb-4 md:mb-8 leading-tight">
+            {step.title}
+          </h2>
+          <p className="text-sm font-light text-white/50 tracking-[0.15em] leading-relaxed">
             {step.desc}
           </p>
         </motion.div>
 
-        <motion.div className="col-span-4 space-y-8" style={{ y: y2 }}>
+        <motion.div className="col-span-8 md:col-span-4 space-y-5 md:space-y-8" style={{ y: y2 }}>
           {step.questions.map((question: string, i: number) => (
             <motion.div
               key={i}
-              className="border-l border-[#00ffff]/30 pl-6 py-2"
+              className="border-l border-[#00ffff]/30 pl-4 md:pl-6 py-2"
               initial={{ opacity: 0, x: 40 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.7, delay: i * 0.15, ease: easing }}
             >
-              <p className="text-sm font-light text-[#00ffff]/70 tracking-[0.2em]">
+              <p className="text-xs sm:text-sm font-light text-[#00ffff]/70 tracking-[0.15em] sm:tracking-[0.2em]">
                 {question}
               </p>
             </motion.div>
@@ -153,21 +163,22 @@ const StepStructure = ({ scrollProgress, step }: any) => {
   const y2 = useTransform(scrollProgress, [step.range[0] + 0.02, step.range[0] + 0.1], [80, 0]);
 
   return (
-    <motion.div className="sticky top-0 h-screen flex items-center" style={{ opacity }}>
+    <motion.div className="sticky top-0 h-screen flex items-center z-20" style={{ opacity }}>
       <Layout>
-        <motion.div className="col-span-4 relative" style={{ y }}>
+        {/* ワイヤーフレーム: モバイルでは非表示 */}
+        <motion.div className="hidden md:block md:col-span-4 relative" style={{ y }}>
           <StructureWireframe scrollProgress={scrollProgress} range={step.range} />
         </motion.div>
 
-        <motion.div className="col-span-4" style={{ y: y2 }}>
-          <div className="text-[10px] tracking-[0.8em] text-white/20 uppercase mb-6">
-            Step {step.id}
-          </div>
-          <h2 className="text-3xl sm:text-4xl md:text-5xl tracking-[0.4em] uppercase mb-8">{step.title}</h2>
-          <p className="text-base sm:text-lg md:text-xl font-light text-white/70 tracking-[0.15em] leading-relaxed mb-8">
+        <motion.div className="col-span-8 md:col-span-4" style={{ y: y2 }}>
+          <StepLabel id={step.id} />
+          <h2 className="text-3xl sm:text-4xl md:text-5xl tracking-[0.1em] sm:tracking-[0.25em] md:tracking-[0.4em] uppercase mb-4 md:mb-8 leading-tight">
+            {step.title}
+          </h2>
+          <p className="text-base sm:text-lg md:text-xl font-light text-white/70 tracking-[0.1em] md:tracking-[0.15em] leading-relaxed mb-4 md:mb-8">
             {step.subtitle}
           </p>
-          <p className="text-sm font-light text-white/40 tracking-[0.2em] leading-relaxed">
+          <p className="text-xs sm:text-sm font-light text-white/40 tracking-[0.15em] leading-relaxed">
             {step.desc}
           </p>
         </motion.div>
@@ -184,7 +195,7 @@ const StepDesign = ({ scrollProgress, step }: any) => {
   const linesOpacity = useTransform(scrollProgress, [step.range[0] + 0.05, step.range[0] + 0.15], [0, 1]);
 
   return (
-    <motion.div className="sticky top-0 h-screen flex items-center" style={{ opacity }}>
+    <motion.div className="sticky top-0 h-screen flex items-center z-20" style={{ opacity }}>
       <motion.div className="absolute inset-0 pointer-events-none" style={{ opacity: gridOpacity }}>
         <div className="w-full h-full" style={{
           backgroundImage: 'linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px)',
@@ -193,21 +204,21 @@ const StepDesign = ({ scrollProgress, step }: any) => {
       </motion.div>
 
       <Layout>
-        <motion.div className="col-span-8 text-center">
+        <motion.div className="col-span-8 text-center px-2">
           <motion.div style={{ y }}>
-            <div className="text-[10px] tracking-[0.8em] text-white/20 uppercase mb-6">
-              Step {step.id}
-            </div>
-            <h2 className="text-4xl sm:text-5xl md:text-6xl tracking-[0.4em] uppercase mb-12">{step.title}</h2>
-            <p className="text-lg sm:text-xl font-light text-white/80 tracking-[0.15em] leading-relaxed mb-6 max-w-3xl mx-auto">
+            <StepLabel id={step.id} />
+            <h2 className="text-3xl sm:text-5xl md:text-6xl tracking-[0.1em] sm:tracking-[0.3em] md:tracking-[0.4em] uppercase mb-6 md:mb-12 leading-tight">
+              {step.title}
+            </h2>
+            <p className="text-sm sm:text-base md:text-lg font-light text-white/80 tracking-[0.1em] md:tracking-[0.15em] leading-relaxed mb-4 max-w-2xl mx-auto">
               {step.subtitle}
             </p>
-            <p className="text-sm font-light text-white/40 tracking-[0.2em]">
+            <p className="text-xs sm:text-sm font-light text-white/40 tracking-[0.15em]">
               {step.desc}
             </p>
           </motion.div>
 
-          <motion.div className="mt-20 space-y-4" style={{ opacity: linesOpacity }}>
+          <motion.div className="mt-10 md:mt-20 space-y-4" style={{ opacity: linesOpacity }}>
             {[0, 1, 2].map((i) => (
               <DesignLine key={i} scrollProgress={scrollProgress} step={step} i={i} />
             ))}
@@ -224,19 +235,19 @@ const StepBuild = ({ scrollProgress, step }: any) => {
   const y = useTransform(scrollProgress, [step.range[0], step.range[0] + 0.08], [60, 0]);
 
   return (
-    <motion.div className="sticky top-0 h-screen flex items-center overflow-hidden" style={{ opacity }}>
+    <motion.div className="sticky top-0 h-screen flex items-center overflow-hidden z-20" style={{ opacity }}>
       <CodeLinesBackground scrollProgress={scrollProgress} range={step.range} />
 
       <Layout>
-        <motion.div className="col-span-8 text-center z-10 relative" style={{ y }}>
-          <div className="text-[10px] tracking-[0.8em] text-white/20 uppercase mb-6">
-            Step {step.id}
-          </div>
-          <h2 className="text-4xl sm:text-5xl md:text-6xl tracking-[0.4em] uppercase mb-12">{step.title}</h2>
-          <p className="text-lg sm:text-xl font-light text-white/80 tracking-[0.15em] leading-relaxed mb-6">
+        <motion.div className="col-span-8 text-center z-10 relative px-2" style={{ y }}>
+          <StepLabel id={step.id} />
+          <h2 className="text-3xl sm:text-5xl md:text-6xl tracking-[0.1em] sm:tracking-[0.3em] md:tracking-[0.4em] uppercase mb-6 md:mb-12 leading-tight">
+            {step.title}
+          </h2>
+          <p className="text-sm sm:text-base md:text-lg font-light text-white/80 tracking-[0.1em] md:tracking-[0.15em] leading-relaxed mb-4">
             {step.subtitle}
           </p>
-          <p className="text-sm font-light text-white/40 tracking-[0.2em]">
+          <p className="text-xs sm:text-sm font-light text-white/40 tracking-[0.15em]">
             {step.desc}
           </p>
         </motion.div>
@@ -255,15 +266,15 @@ const StepDeploy = ({ scrollProgress, step }: any) => {
   const color = useTransform(scrollProgress, [step.range[0] + 0.05, step.range[1]], ['rgba(255,255,255,0.8)', 'rgba(0,255,255,1)']);
 
   return (
-    <motion.div className="sticky top-0 h-screen flex items-center" style={{ opacity, filter }}>
+    <motion.div className="sticky top-0 h-screen flex items-center z-20 bg-[#0a0a12]" style={{ opacity, filter }}>
       <Layout>
-        <motion.div className="col-span-8 text-center" style={{ y, scale }}>
-          <div className="text-[10px] tracking-[0.8em] text-white/20 uppercase mb-6">
-            Step {step.id}
-          </div>
-          <h2 className="text-5xl sm:text-6xl md:text-7xl tracking-[0.5em] uppercase mb-12">{step.title}</h2>
+        <motion.div className="col-span-8 text-center px-2" style={{ y, scale }}>
+          <StepLabel id={step.id} />
+          <h2 className="text-4xl sm:text-6xl md:text-7xl tracking-[0.1em] sm:tracking-[0.35em] md:tracking-[0.5em] uppercase mb-8 md:mb-12 leading-tight">
+            {step.title}
+          </h2>
           <motion.p
-            className="text-2xl sm:text-3xl md:text-4xl font-light tracking-[0.2em] leading-relaxed"
+            className="text-xl sm:text-2xl md:text-4xl font-light tracking-[0.1em] sm:tracking-[0.2em] leading-relaxed"
             style={{ color }}
           >
             {step.subtitle}
@@ -274,7 +285,7 @@ const StepDeploy = ({ scrollProgress, step }: any) => {
   );
 };
 
-// 進行インジケーター
+// 進行インジケーター（モバイルでは小さく端に）
 const ProgressIndicator = ({ scrollProgress }: any) => {
   const [activeStep, setActiveStep] = useState(0);
 
@@ -291,21 +302,16 @@ const ProgressIndicator = ({ scrollProgress }: any) => {
   }, [scrollProgress]);
 
   return (
-    <div className="fixed right-12 top-1/2 -translate-y-1/2 z-50 flex flex-col items-center gap-4">
+    <div className="fixed right-3 sm:right-6 md:right-12 top-1/2 -translate-y-1/2 z-50 flex flex-col items-center gap-2.5 sm:gap-3 md:gap-4">
       {[0, 1, 2, 3, 4, 5].map((index) => (
         <motion.div
           key={index}
-          className={`w-2 h-2 rounded-full border transition-all duration-300 ${
+          className={`rounded-full border transition-all duration-300 ${
             index === activeStep
-              ? 'bg-[#00ffff] border-[#00ffff] shadow-[0_0_8px_rgba(0,255,255,0.6)]'
+              ? 'bg-[#00ffff] border-[#00ffff] shadow-[0_0_6px_rgba(0,255,255,0.6)]'
               : 'bg-transparent border-white/20'
           }`}
-          initial={{ scale: 0.8, opacity: 0.5 }}
-          animate={{
-            scale: index === activeStep ? 1.2 : 0.8,
-            opacity: index === activeStep ? 1 : 0.5
-          }}
-          transition={{ duration: 0.3, ease: easing }}
+          style={{ width: index === activeStep ? 6 : 5, height: index === activeStep ? 6 : 5 }}
         />
       ))}
     </div>
