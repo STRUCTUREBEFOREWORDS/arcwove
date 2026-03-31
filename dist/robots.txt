@@ -1,4 +1,0 @@
-User-agent: *
-Allow: /
-
-Sitemap: https://structurebeforewords.github.io/VELIRO/sitemap.xml
