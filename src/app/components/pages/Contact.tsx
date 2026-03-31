@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Layout, Section, AxisLine, WireframeButton } from '../Common';
+import { WireframeBackground } from '../WireframeBackground';
 
 export const Contact = () => {
   const [formData, setFormData] = useState({
@@ -32,12 +33,13 @@ export const Contact = () => {
   };
 
   return (
-    <div className="relative pt-36">
+    <div className="relative pt-20 md:pt-36">
       <AxisLine />
-      <Section className="py-0 mb-32">
+      <WireframeBackground variant="minimal" />
+      <Section className="py-0 mb-32 relative z-10">
         <Layout>
-          <div className="col-span-8 mb-24 text-center">
-            <h1 className="text-6xl font-semibold tracking-[0.4em] mb-12 uppercase leading-tight">Contact</h1>
+          <div className="col-span-8 mb-16 md:mb-24 text-center px-4">
+            <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-[0.3em] md:tracking-[0.4em] mb-8 md:mb-12 uppercase leading-tight">Contact</h1>
             <p className="text-lg font-light text-white/40 leading-relaxed max-w-xl mx-auto tracking-widest">
               お問い合わせ / 制作依頼
             </p>

@@ -1,5 +1,5 @@
-import React from 'react';
 import { Layout, Section, WireframeButton, AxisLine } from '../Common';
+import { WireframeBackground } from '../WireframeBackground';
 import { useNavigate } from 'react-router-dom';
 
 export const Price = () => {
@@ -13,12 +13,13 @@ export const Price = () => {
   };
 
   return (
-    <div className="relative pt-36">
+    <div className="relative pt-20 md:pt-36">
       <AxisLine />
-      <Section className="py-0 mb-32">
+      <WireframeBackground variant="minimal" />
+      <Section className="py-0 mb-32 relative z-10">
         <Layout>
-          <div className="col-span-8 mb-24 text-center">
-            <h1 className="text-6xl font-semibold tracking-[0.4em] mb-12 uppercase leading-tight">Price</h1>
+          <div className="col-span-8 mb-16 md:mb-24 text-center px-4">
+            <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-[0.3em] md:tracking-[0.4em] mb-8 md:mb-12 uppercase leading-tight">Price</h1>
             <p className="text-lg font-light text-white/40 tracking-widest max-w-xl mx-auto leading-relaxed">
               価格で勝たない。構造で圧倒する。
             </p>
@@ -27,7 +28,7 @@ export const Price = () => {
             </p>
           </div>
 
-          <div className="col-span-8 grid grid-cols-1 md:grid-cols-3 gap-12 items-stretch">
+          <div className="col-span-8 grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-12 items-stretch px-4 md:px-0">
             {/* Launch - Starter Plan */}
             <div className="p-8 border border-white/10 bg-white/5 flex flex-col">
               <h3 className="text-[10px] tracking-[0.8em] text-white/20 uppercase mb-2">Launch</h3>

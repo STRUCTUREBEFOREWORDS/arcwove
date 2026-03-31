@@ -70,7 +70,7 @@ export const Process = () => {
   ]);
 
   return (
-    <div ref={containerRef} className="relative pt-36" style={{ height: '550vh' }}>
+    <div ref={containerRef} className="relative pt-20 md:pt-36" style={{ height: '550vh' }}>
       <motion.div
         className="fixed left-1/2 top-0 bottom-0 w-px -translate-x-1/2 pointer-events-none z-10"
         style={{

@@ -1,4 +1,3 @@
-import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { AppProvider } from './context/AppContext';
 import { Navigation } from './components/Navigation';
@@ -24,14 +23,10 @@ function App() {
             </Routes>
           </main>
           
-          <footer className="relative z-10 py-32 border-t border-white/5">
-            <div className="max-w-[1200px] px-6 mx-auto grid grid-cols-8 gap-6 opacity-30 text-[10px] tracking-[0.4em] uppercase font-light">
-              <div className="col-span-4">
-                © 2026 SAIREN STUDIO.
-              </div>
-              <div className="col-span-4 text-right">
-                TOKYO / GLOBAL
-              </div>
+          <footer className="relative z-10 py-16 md:py-32 border-t border-white/5">
+            <div className="max-w-[1200px] px-6 mx-auto flex justify-between opacity-30 text-[10px] tracking-[0.4em] uppercase font-light">
+              <div>© 2026 SAIREN STUDIO.</div>
+              <div>TOKYO / GLOBAL</div>
             </div>
           </footer>
         </div>
