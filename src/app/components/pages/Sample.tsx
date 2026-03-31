@@ -12,7 +12,7 @@ export const Sample = () => {
       <Section className="py-0 mb-32">
         <Layout>
           <div className="col-span-8 mb-24 text-center">
-            <h1 className="text-6xl font-semibold tracking-[0.4em] mb-12 uppercase leading-tight">Sample</h1>
+            <h1 className="fs-h1 font-semibold tracking-[0.3em] md:tracking-[0.4em] mb-12 uppercase leading-tight">Sample</h1>
             <p className="text-sm font-light text-white/40 tracking-[0.2em] leading-relaxed max-w-2xl mx-auto">
               実績ではない。設計思想の提示。<br />
               量ではなく構造力を見せる。

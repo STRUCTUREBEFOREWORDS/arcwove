@@ -19,8 +19,8 @@ export const Price = () => {
       <Section className="py-0 mb-32 relative z-10">
         <Layout>
           <div className="col-span-8 mb-16 md:mb-24 text-center px-4">
-            <h1 className="fs-h1 font-bold ls-wider mb-8 md:mb-12 uppercase leading-tight">Price</h1>
-            <p className="fs-lg font-light text-white/40 ls-wider max-w-xl mx-auto leading-relaxed">
+            <h1 className="fs-h1 font-bold tracking-[0.3em] md:tracking-[0.4em] mb-8 md:mb-12 uppercase leading-tight">Price</h1>
+            <p className="fs-base font-light text-white/40 tracking-widest max-w-xl mx-auto leading-relaxed">
               価格で勝たない。構造で圧倒する。
             </p>
             <p className="text-sm font-light text-white/30 tracking-[0.2em] mt-6">
