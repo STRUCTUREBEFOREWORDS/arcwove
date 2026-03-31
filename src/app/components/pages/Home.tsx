@@ -109,7 +109,7 @@ const StructureCard3D = ({ number, title, titleJa, desc, items, accent, delay }:
 
           {/* タイトル */}
           <h3
-            className="text-2xl md:text-3xl font-bold tracking-[0.15em] mb-3 leading-tight"
+            className="fs-h3 font-bold ls-normal mb-3 leading-tight"
             style={{ color: accent, fontFamily: 'Syne, sans-serif' }}
           >
             {titleJa}
@@ -214,7 +214,7 @@ export const Home = () => {
               initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8 }}
-              className="text-[10px] tracking-[0.6em] text-white/30 uppercase mb-8"
+              className="fs-xs ls-ultra text-white/30 uppercase mb-8"
             >
               Web Design Studio
             </Motion.p>
@@ -222,7 +222,7 @@ export const Home = () => {
               initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 1, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
-              className="text-4xl sm:text-5xl md:text-7xl font-bold tracking-[0.25em] md:tracking-[0.4em] mb-8 uppercase leading-tight"
+              className="fs-display font-bold ls-wider mb-8 uppercase leading-tight"
             >
               解放せよ<br className="md:hidden" />{' '}感性と感覚を
             </Motion.h1>
@@ -230,7 +230,7 @@ export const Home = () => {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 1, delay: 0.6 }}
-              className="text-sm md:text-lg font-light tracking-[0.2em] md:tracking-[0.3em] text-white/50 mb-12 leading-relaxed max-w-xl"
+              className="fs-lg font-light ls-wider text-white/50 mb-12 leading-relaxed max-w-xl"
             >
               構造設計によってブランドの可能性を最大化する。
             </Motion.p>
@@ -260,11 +260,11 @@ export const Home = () => {
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
               viewport={{ once: true }}
-              className="text-[10px] tracking-[0.6em] text-white/30 uppercase mb-4"
+              className="fs-xs ls-ultra text-white/30 uppercase mb-4"
             >
               Psychological Architecture
             </Motion.p>
-            <h2 className="text-3xl md:text-4xl font-bold tracking-[0.2em] md:tracking-[0.3em] uppercase mb-4">
+            <h2 className="fs-h2 font-bold ls-wide uppercase mb-4">
               構造カード
             </h2>
             <p className="text-xs font-light text-white/30 tracking-[0.15em]">
@@ -283,7 +283,7 @@ export const Home = () => {
       <Section className="relative overflow-hidden">
         <Layout className="relative z-10">
           <div className="col-span-8 mb-12 md:mb-20 text-center px-4">
-            <h2 className="text-3xl md:text-4xl font-bold tracking-[0.2em] md:tracking-[0.3em] uppercase mb-6">
+            <h2 className="fs-h2 font-bold ls-wide uppercase mb-6">
               Strengths
             </h2>
             <p className="text-sm font-light text-white/40 tracking-[0.2em]">
@@ -330,7 +330,7 @@ export const Home = () => {
                 <div className="relative z-10">
                   <div className="text-[9px] tracking-[0.8em] text-white/20 uppercase mb-3">{en}</div>
                   <h3
-                    className="text-2xl md:text-3xl font-bold tracking-[0.15em] uppercase mb-5"
+                    className="fs-h3 font-bold ls-normal uppercase mb-5"
                     style={{ fontFamily: 'Syne, sans-serif' }}
                   >
                     {title}
@@ -349,7 +349,7 @@ export const Home = () => {
         <WireframeBackground variant="minimal" />
         <Layout className="relative z-10">
           <div className="col-span-8 md:col-span-4 flex items-center mb-8 md:mb-0 px-4">
-            <h2 className="text-3xl md:text-4xl font-bold tracking-[0.3em] uppercase">Process</h2>
+            <h2 className="fs-h2 font-bold ls-wider uppercase">Process</h2>
           </div>
           <div className="col-span-8 md:col-span-4 space-y-6 md:space-y-8 md:pl-12 md:border-l border-white/5 px-4">
             <p className="text-base md:text-lg font-light leading-relaxed text-white/60 tracking-wide">
@@ -369,7 +369,7 @@ export const Home = () => {
           <div className="col-span-8 text-center py-12 md:py-20 border border-white/10 bg-white/5 mx-4 md:mx-0 relative overflow-hidden">
             <WireframeBackground variant="minimal" />
             <div className="relative z-10 px-4">
-              <h2 className="text-2xl md:text-3xl font-bold tracking-[0.2em] md:tracking-[0.3em] uppercase mb-6 md:mb-8">
+              <h2 className="fs-h3 font-bold ls-wide uppercase mb-6 md:mb-8">
                 価格で勝たない。構造で圧倒する。
               </h2>
               <p className="text-sm font-light text-white/40 tracking-[0.2em] mb-8 md:mb-12 max-w-2xl mx-auto leading-relaxed">
