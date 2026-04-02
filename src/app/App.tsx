@@ -1,5 +1,7 @@
+import { useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { AppProvider, useApp } from './context/AppContext';
+import { trackEvent } from "../lib/api";
 import { Navigation } from './components/Navigation';
 import { Home } from './components/pages/Home';
 import { Sample } from './components/pages/Sample';
@@ -20,6 +22,15 @@ const AppFooter = () => {
 };
 
 function App() {
+  useEffect(() => {
+    trackEvent({
+      event_type: "view_page",
+      page_url: window.location.href,
+      referrer: document.referrer,
+      device_type: /Mobi|Android/i.test(navigator.userAgent) ? "mobile" : "desktop",
+    });
+  }, []);
+
   return (
     <AppProvider>
       <Router>
